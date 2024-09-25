@@ -265,7 +265,7 @@
                                             </td>
                                             <td t-if="display_discount" class="text-right"
                                                 style="padding:0;" groups="sale.group_discount_per_so_line">
-                                                <span t-field="line.discount"/>
+                                                <span t-field="line.discount" t-options="{'precision': 2}"/>
                                             </td>
                                             <td t-if="display_discount" class="text-right"
                                                 style="padding:0;">
@@ -273,8 +273,10 @@
                                             </td>
                                             <td class="text-right o_price_total" style="padding:0;">
                                                 <span t-field="line.price_subtotal"
+                                                      t-options="{'precision': 2}"
                                                       groups="account.group_show_line_subtotals_tax_excluded"/>
                                                 <span t-field="line.price_total"
+                                                      t-options="{'precision': 2}"
                                                       groups="account.group_show_line_subtotals_tax_included"/>
                                             </td>
                                         </t>
@@ -298,7 +300,7 @@
                                             <td t-att-colspan="colspan" style="padding:0;">
                                                 <strong class="mr16">Subtotal</strong>
                                                 <span t-esc="current_subtotal"
-                                                      t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                                      t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id, "precision": 2}'/>
                                             </td>
                                         </tr>
                                     </t>
@@ -317,7 +319,7 @@
                                             <strong>Toplam</strong>
                                         </td>
                                         <td class="text-right" style="padding:0;">
-                                            <span t-field="doc.amount_untaxed"/>
+                                            <span t-field="doc.amount_untaxed" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id, "precision": 2}'/>
                                         </td>
                                     </tr>
                                     <t t-foreach="doc.amount_by_group" t-as="amount_by_group">
@@ -331,12 +333,12 @@
                                                         <span>on</span>
                                                         &amp;nbsp;
                                                         <t t-esc="amount_by_group[2]"
-                                                           t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                                           t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id, "precision" :2}'/>
                                                     </span>
                                                 </td>
                                                 <td class="text-right o_price_total" style="padding:0;">
                                                     <span t-esc="amount_by_group[1]"
-                                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id, "precision" :2}'/>
                                                 </td>
                                             </t>
                                             <t t-else="">
@@ -347,7 +349,7 @@
                                                 </td>
                                                 <td class="text-right o_price_total" style="padding:0;">
                                                     <span t-esc="amount_by_group[1]"
-                                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id, "precision" :2}'/>
                                                 </td>
                                             </t>
                                         </tr>
@@ -357,7 +359,7 @@
                                             <strong>Genel Toplam</strong>
                                         </td>
                                         <td class="text-right" style="padding:0;">
-                                            <span t-field="doc.amount_total"/>
+                                            <span t-field="doc.amount_total" t-options="{'widget': 'monetary', 'precision': 2}"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -377,6 +379,8 @@
                         * Özel üretimler ve işçilikli ürünler için adetlerde +-%5 değişiklik olabilir.
                         <br/>
                         * Lütfen onaylamadan önce ürün modeli,rengi,adedi ve teslimat bilgilerini kontrol ediniz.
+                        <br/>
+                        * Havale/EFT açıklamasında <strong t-esc="doc.name"/> sipariş numaranızı belirtirseniz sistemimiz siparişi otomatik onaylar.
                     </p>
 <!--                    <t t-if="doc.currency_id.name in ['USD','EUR']">-->
 <!--                        <t t-if="doc.currency_id.name == 'USD'">-->
@@ -393,73 +397,70 @@
                     <div class="row">
                         <table class="table table-borderless"
                                style="page-break-inside:avoid;">
-                            <t t-if="1==1">
-                                <tr>
-                                    <th class="text-left" rowspan="3"
-                                        style="padding: 0;width: 20%;border-right: 2px solid black;">
-                                        <img width="75px" height="75px"
-                                                     style="margin-left: auto;
-                                                        margin-right: auto;
-                                                        display: block;"
-                                                     t-attf-src="data:image/png;base64,#{doc.survey_url_qr}"/>
-                                        <p style="font-weight: normal;
-                                                font-size: 12px;
-                                                margin-bottom: 0;
-                                                text-align: center;">
-                                                    Bizi değerlendirin
-                                                </p>
-                                    </th>
-                                    <th class="text-left" style="padding: 0;padding-left:12px;">
-                                        <span>
-                                            Banka Adı
-                                        </span>
-                                    </th>
-
-                                    <th class="text-left" style="padding: 0;">
-                                        <span>
-                                            Şb.Kd.
-                                        </span>
-                                    </th>
-                                    <th class="text-left" style="padding: 0;">
-                                        <span>
-                                            Hs.No.
-                                        </span>
-                                    </th>
-                                    <th class="text-left" style="padding: 0;">
-                                        <span>
-                                            IBAN
-                                        </span>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 0;padding-left:12px;">
-                                        İş Bankası
-                                    </td>
-                                    <td style="padding: 0;">
-                                        4384
-                                    </td>
-                                    <td style="padding: 0;">
-                                        0012114
-                                    </td>
-                                    <td style="padding: 0;">
-                                        TR26 0006 4000 0014 3840 0121 14 (TL)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 0;padding-left:12px;">
-                                        Garanti Bankası
-                                    </td>
-                                    <td style="padding: 0;">
-                                        682
-                                    </td>
-                                    <td style="padding: 0;">
-                                        6294510
-                                    </td>
-                                    <td style="padding: 0;">
-                                        TR40 0006 2000 6820 0006 2945 10 (TL)
-                                    </td>
-                                </tr>
-                            </t>
+                            <tr>
+                                <th class="text-left" rowspan="3"
+                                    style="padding: 0;width: 20%;border-right: 2px solid black;">
+                                    <img width="75px" height="75px"
+                                         style="margin-left: auto;
+                                                       margin-right: auto;
+                                                       display: block;"
+                                         t-attf-src="data:image/png;base64,#{doc.survey_url_qr}"/>
+                                    <p style="font-weight: normal;
+                                               font-size: 12px;
+                                               margin-bottom: 0;
+                                               text-align: center;">
+                                        Bizi değerlendirin
+                                    </p>
+                                </th>
+                                <th class="text-left" style="padding: 0;padding-left:12px;">
+                                    <span>
+                                        Banka Adı
+                                    </span>
+                                </th>
+                                <th class="text-left" style="padding: 0;">
+                                    <span>
+                                        Şb.Kd.
+                                    </span>
+                                </th>
+                                <th class="text-left" style="padding: 0;">
+                                    <span>
+                                        Hs.No.
+                                    </span>
+                                </th>
+                                <th class="text-left" style="padding: 0;">
+                                    <span>
+                                        IBAN
+                                    </span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0;padding-left:12px;">
+                                    İş Bankası
+                                </td>
+                                <td style="padding: 0;">
+                                    4384
+                                </td>
+                                <td style="padding: 0;">
+                                    0012114
+                                </td>
+                                <td style="padding: 0;">
+                                    TR26 0006 4000 0014 3840 0121 14 (TL)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0;padding-left:12px;">
+                                    Garanti Bankası
+                                </td>
+                                <td style="padding: 0;">
+                                    682
+                                </td>
+                                <td style="padding: 0;">
+                                    6294510
+                                </td>
+                                <td style="padding: 0;">
+                                    TR40 0006 2000 6820 0006 2945 10 (TL)
+                                </td>
+                            </tr>
 <!--                            <t t-if="doc.currency_id.name in ['USD','EUR']">-->
 <!--                                <tr>-->
 <!--                                    <th class="text-left" rowspan="2"-->
@@ -817,7 +818,7 @@
                                             </td>
                                             <td t-if="display_discount" class="text-right"
                                                 style="padding:0;" groups="sale.group_discount_per_so_line">
-                                                <span t-field="line.discount"/>
+                                                <span t-field="line.discount" t-options="{'precision': 2}"/>
                                             </td>
                                             <td t-if="display_discount" class="text-right"
                                                 style="padding:0;">
@@ -826,8 +827,10 @@
                                             </td>
                                             <td class="text-right o_price_total" style="padding:0;">
                                                 <span t-field="line.price_subtotal"
+                                                      t-options="{'precision': 2}"
                                                       groups="account.group_show_line_subtotals_tax_excluded"/>
                                                 <span t-field="line.price_total"
+                                                      t-options="{'precision': 2}"
                                                       groups="account.group_show_line_subtotals_tax_included"/>
                                             </td>
                                         </t>
@@ -851,7 +854,7 @@
                                             <td t-att-colspan="colspan" style="padding:0;">
                                                 <strong class="mr16">Subtotal</strong>
                                                 <span t-esc="current_subtotal"
-                                                      t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                                      t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id, "precision": 2}'/>
                                             </td>
                                         </tr>
                                     </t>
@@ -870,7 +873,7 @@
                                             <strong>Subtotal</strong>
                                         </td>
                                         <td class="text-right" style="padding:0;">
-                                            <span t-field="doc.amount_untaxed"/>
+                                            <span t-field="doc.amount_untaxed" t-options="{'precision': 2}"/>
                                         </td>
                                     </tr>
                                     <t t-foreach="doc.amount_by_group" t-as="amount_by_group">
@@ -884,12 +887,12 @@
                                                         <span>on</span>
                                                         &amp;nbsp;
                                                         <t t-esc="amount_by_group[2]"
-                                                           t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                                           t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id, "precision": 2}'/>
                                                     </span>
                                                 </td>
                                                 <td class="text-right o_price_total" style="padding:0;">
                                                     <span t-esc="amount_by_group[1]"
-                                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id, "precision": 2}'/>
                                                 </td>
                                             </t>
                                             <t t-else="">
@@ -900,7 +903,7 @@
                                                 </td>
                                                 <td class="text-right o_price_total" style="padding:0;">
                                                     <span t-esc="amount_by_group[1]"
-                                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id, "precision" :2}'/>
                                                 </td>
                                             </t>
                                         </tr>
@@ -910,7 +913,7 @@
                                             <strong>Total</strong>
                                         </td>
                                         <td class="text-right" style="padding:0;">
-                                            <span t-field="doc.amount_total"/>
+                                            <span t-field="doc.amount_total" t-options="{'widget': 'monetary', 'precision': 2}"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -942,12 +945,15 @@
                     <div class="row">
                         <div class="col">
                             <t t-if="doc.currency_id.name == 'TRY'">
+                                <t t-set="currency_name" t-value="'try'"/>
                                 <strong>TRY BANK ACCOUNT INFORMATION</strong>
                             </t>
                             <t t-if="doc.currency_id.name == 'USD'">
+                                <t t-set="currency_name" t-value="'usd'"/>
                                 <strong>USD BANK ACCOUNT INFORMATION</strong>
                             </t>
                             <t t-if="doc.currency_id.name=='EUR'">
+                                <t t-set="currency_name" t-value="'eur'"/>
                                 <strong>EURO BANK ACCOUNT INFORMATION</strong>
                             </t>
                         </div>
@@ -960,74 +966,41 @@
                                     <strong>BENEFICIARY</strong>
                                 </td>
                                 <td style="padding:3px;">
-                                    <span>ALTINKAYA ELEKTRONIK CIH KUT SAN TIC AS</span>
+                                    <span t-esc="doc.partner_id.country_id['default_%s_bank_account_id' % currency_name].acc_holder_name" />
                                 </td>
                                 <td style="padding:3px;white-space:nowrap;">
                                     <strong>BANK NAME</strong>
                                 </td>
                                 <td style="padding:3px;">
-                                    <span>GARANTI BANK, ANKARA OSB BRANCH (682)</span>
+                                    <span t-esc="doc.partner_id.country_id['default_%s_bank_account_id' % currency_name].bank_id.name"  />
                                 </td>
                             </tr>
                             <tr style="white-space:nowrap;">
-                                <td style="padding:3px;">
-                                    <strong>ACCOUNT NO</strong>
-                                </td>
-                                <td style="padding:3px;" t-if="doc.currency_id.name=='TRY'">
-                                    682-6294510
-                                </td>
-                                <td style="padding:3px;" t-if="doc.currency_id.name=='USD'">
-                                    682-9074502
-                                </td>
-                                <td style="padding:3px;" t-if="doc.currency_id.name=='EUR'">
-                                    682-9074503
-                                </td>
                                 <td style="padding:3px;white-space:nowrap;">
                                     <strong>BANK ADDRESS</strong>
                                 </td>
                                 <td style="padding:3px;">
-                                    <span>AHIEVRAN CD. NO:86 OSTIM YENIMAHALLE 06280 ANKARA TURKEY
-                                    </span>
+                                    <span t-esc="doc.partner_id.country_id['default_%s_bank_account_id' % currency_name].bank_id._display_address()"/>
+                                </td>
+                                <td style="padding:3px;">
+                                    <strong>SWIFT CODE</strong>
+                                </td>
+                                <td style="padding:3px;">
+                                    <span t-esc="doc.partner_id.country_id['default_%s_bank_account_id' % currency_name].bank_bic" />
                                 </td>
                             </tr>
                             <tr style="white-space:nowrap;">
                                 <td style="padding:3px;">
                                     <strong>IBAN NO</strong>
                                 </td>
-                                <td style="padding:3px;" t-if="doc.currency_id.name=='TRY'">
-                                    <strong>
-                                        TR400006200068200006294510
-                                    </strong>
-                                </td>
-                                <td style="padding:3px;" t-if="doc.currency_id.name=='USD'">
-                                    <strong>
-                                        TR200006200068200009074502
-                                    </strong>
-                                </td>
-                                <td style="padding:3px;" t-if="doc.currency_id.name=='EUR'">
-                                    <strong>
-                                        TR900006200068200009074503
-                                    </strong>
+                                <td style="padding:3px;">
+                                    <strong t-esc="doc.partner_id.country_id['default_%s_bank_account_id' % currency_name].sanitized_acc_number"/>
                                 </td>
                                 <td style="padding:3px;white-space:nowrap;">
                                     <strong>BANK PHONE</strong>
                                 </td>
                                 <td style="padding:3px;">
-                                    +90 312 3850860
-                                </td>
-                            </tr>
-                            <tr style="white-space:nowrap;">
-                                <td style="padding:3px;">
-                                    <strong>SWIFT CODE</strong>
-                                </td>
-                                <td style="padding:3px;">
-                                    <span>TGBATRIS</span>
-                                </td>
-                                <td style="padding:3px;white-space:nowrap;">
-                                    <strong>BANK FAX</strong>
-                                </td>
-                                <td style="padding:3px;">
-                                    +90 312 3853722
+                                    <span t-esc="doc.partner_id.country_id['default_%s_bank_account_id' % currency_name].bank_id.phone"/>
                                 </td>
                             </tr>
                         </table>
