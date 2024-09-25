@@ -19,6 +19,15 @@ class ProductTemplate(models.Model):
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+    default_code = fields.Char(copy=False)
+
+    @api.constrains("default_code")
+    def _check_default_code_unique(self):
+        for template in self:
+            if template.default_code:
+                if self.search_count([("default_code", "=", template.default_code)]) > 1:
+                    raise UserError(_("The default code must be unique."))
+
     @api.multi
     def _compute_currency_id(self):
         main_company = self.env['res.company']._get_main_company()
@@ -51,6 +60,7 @@ class ProductTemplate(models.Model):
 class Product(models.Model):
     _inherit = "product.product"
 
+    default_code = fields.Char(copy=False)
     responsible_employee_id = fields.Many2one(
         comodel_name="hr.employee",
         string="Responsible Employee"
@@ -209,6 +219,40 @@ class Product(models.Model):
                         quant.write({
                             'reserved_quantity': raw_reserved_qty
                         })
+
+    @api.multi
+    def _compute_set_quantities(self):
+        # Explode set content and find unreserved quantity
+        for product in self:
+            bom_id = self.env["mrp.bom"].sudo()._bom_find(product=product)
+            if bom_id and bom_id.type == "phantom":
+                boms, lines = bom_id.explode(
+                    product, quantity=1, picking_type=bom_id.picking_type_id
+                )
+                exploded_set_qty = 0
+                for line in lines:
+                    unreserved_qty = line[1]["target_product"].qty_available_not_res
+                    factor = line[1]["qty"]
+                    if unreserved_qty > 0 and factor > 0:
+                        set_qty = unreserved_qty / factor
+                    else:
+                        set_qty = 0
+                    exploded_set_qty = min(set_qty, exploded_set_qty) if exploded_set_qty else set_qty
+                return exploded_set_qty
+            else:
+                return product.qty_available_not_res
+
+    @api.one
+    def get_quantity_website(self):
+        self.ensure_one()
+        data = {}
+        if self.product_tmpl_id.set_product:
+            data['qty_unreserved_sincan'] = self.with_context({'location': 21})._compute_set_quantities()
+            data['qty_unreserved_merkez'] = self.with_context({'location': 12})._compute_set_quantities()
+        else:
+            data['qty_unreserved_sincan'] = self.qty_unreserved_sincan
+            data['qty_unreserved_merkez'] = self.qty_unreserved_merkez
+        return data
 
 
 class mrpProduction(models.Model):
