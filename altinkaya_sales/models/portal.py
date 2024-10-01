@@ -8,7 +8,7 @@ from odoo import api, exceptions, fields, models, tools, _
 class PortalMixinInheritance(models.AbstractModel):
     _inherit = "portal.mixin"
 
-    @api.multi
+    
     def get_portal_url(
         self,
         suffix=None,

@@ -4,7 +4,7 @@ from odoo import api, fields, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    @api.multi
+    
     def action_view_mos(self):
         action = self.env.ref("mrp.mrp_production_report").read()[0]
         action["domain"] = [("product_tmpl_id", "in", self.ids)]
@@ -16,7 +16,7 @@ class ProductTemplate(models.Model):
         }
         return action
 
-    @api.multi
+    
     def _compute_used_in_bom_count(self):
         """Override to add mrp.bom.template.line to the 'Used in' count"""
         for template in self:
@@ -28,7 +28,7 @@ class ProductTemplate(models.Model):
                 ]
             )
 
-    @api.multi
+    
     def action_used_in_bom(self):
         """Override to add mrp.bom.template.line to the 'Used in' action"""
         self.ensure_one()

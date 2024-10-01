@@ -17,11 +17,11 @@
             </field>
         </record>
 
-        <act_window id="action_res_partner_change_accounts_eur"
+        <!-- <act_window id="action_res_partner_change_accounts_eur"
                     multi="True"
                     key2="client_action_multi" name="Change Accounts to EUR"
                     res_model="change.partner.accounts.eur" src_model="res.partner"
-                    view_mode="form" target="new" view_type="form"/>
+                    view_mode="form" target="new" view_type="form"/> -->
 
 
     </data>

@@ -17,15 +17,15 @@ class StockLocationRouteInherit(models.Model):
         sanitize_attributes=False,
         translate=html_translate,
         copy=False,
-        track_visibility="onchange",
+        tracking=True,
     )
 
     #  Add tracking to the field
-    sequence = fields.Integer(track_visibility="onchange")
-    active = fields.Boolean(track_visibility="onchange")
-    name = fields.Char(track_visibility="onchange")
+    sequence = fields.Integer(tracking=True)
+    active = fields.Boolean(tracking=True)
+    name = fields.Char(tracking=True)
 
-    @api.multi
+    
     def write(self, vals):
         """Track rule_ids field changes."""
         msg = {}

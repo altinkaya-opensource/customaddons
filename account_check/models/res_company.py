@@ -29,7 +29,7 @@ class ResCompany(models.Model):
         'for eg. "Holding Checks"',
     )
 
-    @api.multi
+    
     def _get_check_account(self, check_type):
         self.ensure_one()
         if check_type == 'holding':

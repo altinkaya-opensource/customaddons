@@ -92,6 +92,11 @@ def _match_production_with_route(production):
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
+    #  (Migration field, will be deleted.)
+    confirmation_date = fields.Datetime(
+        string="Confirmation Date",
+    )
+
     production_ids = fields.One2many(
         string="Productions", comodel_name="mrp.production", inverse_name="sale_id"
     )
@@ -133,13 +138,12 @@ class SaleOrder(models.Model):
         copy=False,
         default="01_draft",
         index=True,
-        track_visibility="onchange",
+        tracking=True,
         compute="_compute_order_state",
         track_sequence=3,
         store=True,
     )
 
-    @api.multi
     @api.depends(
         "state",
         "picking_ids.state",
@@ -152,7 +156,11 @@ class SaleOrder(models.Model):
         deadline = datetime.now() - timedelta(days=360)
         for sale in self:
             # SALE
-            if sale.confirmation_date and sale.confirmation_date < deadline and sale.state in ["sent", "sale"]:
+            if (
+                sale.confirmation_date
+                and sale.confirmation_date < deadline
+                and sale.state in ["sent", "sale"]
+            ):
                 sale.state = "done"
                 sale.order_state = "25_completed"
                 continue
@@ -241,62 +249,63 @@ class SaleOrder(models.Model):
         store=True,
     )
 
-    @api.multi
     @api.depends("currency_id", "amount_total", "date_order")
     def _compute_amount_total_usd(self):
         """
         This function computes the total amount in USD
         :return:
         """
+        for order in self:
+            order.amount_total_usd = 0.0
         # This means that the record is not created yet and it's single.
-        if not self.ids:
-            self.amount_total_usd = 0.0
-            return
-        cr = self._cr
-        query = """
--- -- EUR_ID = 1
--- -- USD_ID = 2
-        SELECT sale_order.id,
-               CASE
-                   WHEN pl.currency_id = 2 THEN sale_order.amount_total
-                   ELSE
-                       CASE
-                           WHEN sale_order.amount_total IS NOT NULL THEN
-                               CASE
-                                   WHEN pl.currency_id = 1 THEN
-                                       (
-                                           SELECT sale_order.amount_total / rateEUR.rate * rateUSD.rate
-                                           FROM res_currency_rate rateEUR, res_currency_rate rateUSD
-                                           WHERE rateEUR.currency_id = 1
-                                           AND rateUSD.currency_id = 2
-                                           AND rateEUR.name = sale_order.date_order::date
-                                           AND rateUSD.name = sale_order.date_order::date
-                                       )
-                                   ELSE
-                                       (
-                                           SELECT sale_order.amount_total * rateUSD.rate
-                                           FROM res_currency_rate rateUSD
-                                           WHERE rateUSD.currency_id = 2
-                                           AND rateUSD.name = sale_order.date_order::date
-                                       )
-                               END
-                           ELSE 0.0
-                       END
-               END AS amount_total_usd
-        FROM sale_order
-        INNER JOIN product_pricelist pl ON sale_order.pricelist_id = pl.id
-        WHERE sale_order.id in %(ids)s;
 
-        """
-        cr.execute(query, {"ids": tuple(self.ids)})
-        result = dict(cr.fetchall())
-        for order in self.filtered("id"):
-            if result.get(order.id):
-                order.amount_total_usd = result[order.id]
-            else:
-                order.amount_total_usd = 0.0
+    #         if not self.ids:
+    #             self.amount_total_usd = 0.0
+    #             return
+    #         cr = self._cr
+    #         query = """
+    # -- -- EUR_ID = 1
+    # -- -- USD_ID = 2
+    #         SELECT sale_order.id,
+    #                CASE
+    #                    WHEN pl.currency_id = 2 THEN sale_order.amount_total
+    #                    ELSE
+    #                        CASE
+    #                            WHEN sale_order.amount_total IS NOT NULL THEN
+    #                                CASE
+    #                                    WHEN pl.currency_id = 1 THEN
+    #                                        (
+    #                                            SELECT sale_order.amount_total / rateEUR.rate * rateUSD.rate
+    #                                            FROM res_currency_rate rateEUR, res_currency_rate rateUSD
+    #                                            WHERE rateEUR.currency_id = 1
+    #                                            AND rateUSD.currency_id = 2
+    #                                            AND rateEUR.name = sale_order.date_order::date
+    #                                            AND rateUSD.name = sale_order.date_order::date
+    #                                        )
+    #                                    ELSE
+    #                                        (
+    #                                            SELECT sale_order.amount_total * rateUSD.rate
+    #                                            FROM res_currency_rate rateUSD
+    #                                            WHERE rateUSD.currency_id = 2
+    #                                            AND rateUSD.name = sale_order.date_order::date
+    #                                        )
+    #                                END
+    #                            ELSE 0.0
+    #                        END
+    #                END AS amount_total_usd
+    #         FROM sale_order
+    #         INNER JOIN product_pricelist pl ON sale_order.pricelist_id = pl.id
+    #         WHERE sale_order.id in %(ids)s;
 
-    @api.multi
+    #         """
+    #         cr.execute(query, {"ids": tuple(self.ids)})
+    #         result = dict(cr.fetchall())
+    #         for order in self.filtered("id"):
+    #             if result.get(order.id):
+    #                 order.amount_total_usd = result[order.id]
+    #             else:
+    #                 order.amount_total_usd = 0.0
+
     def action_quotation_send(self):
         res = super(SaleOrder, self).action_quotation_send()
 
@@ -326,7 +335,7 @@ class SaleOrder(models.Model):
             )
             sale.sale_line_history = last_sale_lines.ids
 
-    #     @api.multi
+    #
     #     def print_quotation(self):
     #         '''
     #         This function prints the sales order and mark it as sent, so that we can see more easily the next step of the workflow
@@ -335,7 +344,6 @@ class SaleOrder(models.Model):
     #         self.signal_workflow('quotation_sent')
     #         return self.env['report'].get_action(self, 'sale.orderprint')
 
-    @api.multi
     def _altinkaya_payment_url(self):
         for order in self:
             tutar = "%d" % (int)(100 * order.amount_total)
@@ -365,7 +373,6 @@ class SaleOrder(models.Model):
             }
             order.altinkaya_payment_url = "?" + url_encode(params)
 
-    @api.multi
     def write(self, vals):
         res = super(SaleOrder, self).write(vals)
         for sale in self:
@@ -415,7 +422,6 @@ class SaleOrderLine(models.Model):
 
             sale.order_line._compute_amount()
 
-    @api.one
     @api.depends("product_id")
     def _compute_set_product(self):
         bom_obj = self.env["mrp.bom"].sudo()
@@ -444,7 +450,6 @@ class SaleOrderLine(models.Model):
 
         return {"domain": {"product_tmpl_id": domain}}
 
-    @api.multi
     def explode_set_contents(self):
         """Explodes order lines."""
 

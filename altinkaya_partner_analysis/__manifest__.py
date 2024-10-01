@@ -11,7 +11,7 @@
 
 {
     'name' : 'Partner Analysis',
-    'version' : '1.1',
+    'version' : '13.0.0.1.0',
     'author' : 'Acespritech Solutions Pvt. Ltd.',
     'category' : 'Account',
     'description' : """Partner Analysis""",
@@ -20,7 +20,7 @@
     'data': [
         'security/security.xml',
         'views/account_invoice_report_view.xml',
-        'views/partner_view.xml',
+        # 'views/partner_view.xml', # TODO: migration needed
     ],
     'qweb': [
     ],

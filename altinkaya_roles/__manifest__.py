@@ -1,6 +1,6 @@
 {
     'name' : 'Altinkaya Security Roles&Rules',
-    'version' : '12.0',
+    'version' : '13.0.0.1.0',
     'category': 'General',
     'author' : 'MAkifOzdemir,Codequarters',
     'description': """

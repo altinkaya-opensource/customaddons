@@ -45,7 +45,7 @@ class MrpBoM(models.Model):
     tool_product_id = fields.Many2one("product.product", string="Tool")
 
     # TODO: @dogan create work orders override
-    #     @api.multi
+    #     
     #     def _prepare_wc_line(self, wc_use, level=0, factor=1):
     #         res = super(MrpBoM, self)._prepare_wc_line(
     #             wc_use, level=level, factor=factor)
@@ -74,7 +74,7 @@ class MrpBoM(models.Model):
     #             })
     #         return res
 
-    @api.multi
+    
     @api.onchange("routing_id")
     def onchange_routing_id(self):
         res = super(MrpBoM, self).onchange_routing_id()

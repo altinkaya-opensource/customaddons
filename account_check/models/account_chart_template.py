@@ -31,7 +31,7 @@ class AccountChartTemplate(models.Model):
         # domain=[('type', 'in', ['other'])],
     )
 
-    @api.multi
+    
     def _load_template(
             self, company, code_digits=None,
             account_ref=None, taxes_ref=None):
@@ -52,7 +52,7 @@ class AccountChartTemplate(models.Model):
                 company[field] = account_ref[account_field.id]
         return account_ref, taxes_ref
 
-    @api.multi
+    
     def _create_bank_journals(self, company, acc_template_ref):
         """
         Bank - Cash journals are created with this method

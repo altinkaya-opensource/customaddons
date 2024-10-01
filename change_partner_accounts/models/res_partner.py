@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    @api.multi
+    
     @api.depends("property_account_receivable_id", "property_account_payable_id")
     def _get_partner_currency(self):
         for partner in self:
@@ -21,7 +21,7 @@ class ResPartner(models.Model):
             else:
                 partner.partner_currency_id = partner.sudo().company_id.currency_id
 
-    @api.multi
+    
     @api.depends("move_line_ids")
     def _compute_balance_fields(self):
         """
@@ -126,7 +126,7 @@ class ResPartner(models.Model):
         store=True,
     )
 
-    @api.multi
+    
     def _compute_has_2breconciled(self):
         domain = [
             "&",
@@ -182,11 +182,11 @@ class ResPartner(models.Model):
         ]
         return [("id", "in", result)]
 
-    @api.multi
+    
     def _search_has_2breconciled_customer(self, operator, operand):
         return self._search_has_2breconciled("customer")
 
-    @api.multi
+    
     def _search_has_2breconciled_supplier(self, operator, operand):
         return self._search_has_2breconciled("supplier")
 
@@ -206,7 +206,7 @@ class ResPartner(models.Model):
         store=False,
     )
 
-    @api.one
+    
     def change_accounts_to_usd(self):
         """Change partners receivable and payable account to USD and update move lines accordingly"""
         if self.parent_id:
@@ -219,7 +219,7 @@ class ResPartner(models.Model):
         )
         old_receivable = self.property_account_receivable_id
         old_payable = self.property_account_payable_id
-        company_currency = self.env.user.company_id.currency_id
+        company_currency = self.env.company.currency_id
         if not (receivable_usd and payable_usd):
             raise UserError(_("Error in accounts definition"))
 
@@ -256,11 +256,11 @@ class ResPartner(models.Model):
         )
         for aml in partner_amls:
             amount_currency = company_currency._convert(
-                aml.debit - aml.credit, currency_id, self.env.user.company_id, aml.date
+                aml.debit - aml.credit, currency_id, self.env.company, aml.date
             )
 
             amount_residual_currency = company_currency._convert(
-                aml.amount_residual, currency_id, self.env.user.company_id, aml.date
+                aml.amount_residual, currency_id, self.env.company, aml.date
             )
             cr.execute(
                 """ update account_move_line
@@ -273,7 +273,7 @@ class ResPartner(models.Model):
                 )
             )
 
-    @api.one
+    
     def change_accounts_to_eur(self):
         """Change partners receivable and payable account to eur and update move lines accordingly"""
         if self.parent_id:
@@ -286,7 +286,7 @@ class ResPartner(models.Model):
         )
         old_receivable = self.property_account_receivable_id
         old_payable = self.property_account_payable_id
-        company_currency = self.env.user.company_id.currency_id
+        company_currency = self.env.company.currency_id
         if not (receivable_eur and payable_eur):
             raise UserError(_("Error in accounts definition"))
 
@@ -322,11 +322,11 @@ class ResPartner(models.Model):
         )
         for aml in partner_amls:
             amount_currency = company_currency._convert(
-                aml.debit - aml.credit, currency_id, self.env.user.company_id, aml.date
+                aml.debit - aml.credit, currency_id, self.env.company, aml.date
             )
 
             amount_residual_currency = company_currency._convert(
-                aml.amount_residual, currency_id, self.env.user.company_id, aml.date
+                aml.amount_residual, currency_id, self.env.company, aml.date
             )
             cr.execute(
                 """ update account_move_line
@@ -339,7 +339,7 @@ class ResPartner(models.Model):
                 )
             )
 
-    @api.one
+    
     def change_accounts_to_try(self):
         """Change partners receivable and payable account to company currency and donot update move lines"""
         if self.parent_id:

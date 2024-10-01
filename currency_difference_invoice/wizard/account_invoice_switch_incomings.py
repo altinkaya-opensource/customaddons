@@ -6,7 +6,7 @@ class AccountInvoiceSwitchIncomings(models.TransientModel):
     _name = "account.invoice.switch.incomings"
     _description = "Account Invoice Switch Incomings"
 
-    @api.multi
+    
     def switch_invoices(self):
         context = dict(self._context)
         active_ids = context.get('active_ids', [])

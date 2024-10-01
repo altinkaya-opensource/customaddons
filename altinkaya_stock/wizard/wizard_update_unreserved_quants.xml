@@ -7,10 +7,10 @@
             <field name="arch" type="xml">
                 <form string="Update Quant Reservations">
                     <sheet>
-                    <footer>
-                        <button name="action_update_unreserved_quants" type="object" string="Update" class="oe_highlight"/>
-                        <button string="Cancel" class="oe_link" special="cancel" />
-                    </footer>
+                        <footer>
+                            <button name="action_update_unreserved_quants" type="object" string="Update" class="oe_highlight"/>
+                            <button string="Cancel" class="oe_link" special="cancel" />
+                        </footer>
                     </sheet>
 
                 </form>
@@ -22,15 +22,13 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">update.unreserved.quants</field>
             <field name="view_mode">form</field>
-            <field name="view_type">form</field>
+
             <field name="view_id" ref="view_update_quant_wizard_form"/>
             <field name="context">{}</field>
             <field name="target">new</field>
         </record>
 
-        <menuitem action="update_quants_wizard_action"
-            id="menu_update_quant_wizard"
-            parent="stock.menu_warehouse_config" sequence="10"/>
+        <menuitem action="update_quants_wizard_action" id="menu_update_quant_wizard" parent="stock.menu_warehouse_config" sequence="10"/>
 
     </data>
 

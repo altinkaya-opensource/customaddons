@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import datetime
 import logging
 from odoo import models, fields, api, _
@@ -25,7 +27,6 @@ class LogsScheduledActions(models.Model):
     error_details = fields.Char(
         string="Error details", track_visibility='always')
 
-    @api.multi
     def action_mail_send(self):
         self.ensure_one()
         ir_model_data = self.env['ir.model.data']
@@ -48,7 +49,6 @@ class LogsScheduledActions(models.Model):
         return {
             'name': _('Compose Email'),
             'type': 'ir.actions.act_window',
-            'view_type': 'form',
             'view_mode': 'form',
             'res_model': 'mail.compose.message',
             'views': [(compose_form_id, 'form')],
@@ -79,8 +79,6 @@ class IrCron(models.Model):
         res = super(IrCron, self)._handle_callback_exception(
             cron_name, server_action_id, job_id, job_exception)
         my_cron = self.browse(job_id)
-        
-        print(my_cron)
         self.env['logs.action'].create({
             'name': my_cron.name,
             'method': my_cron.model_id.name,
@@ -88,7 +86,8 @@ class IrCron(models.Model):
             'exec_date': datetime.datetime.now(),
             'error_details': str(job_exception),
         })
-        return True
+
+        return res
 
     @api.model
     def _test_scheduler_failure(self):

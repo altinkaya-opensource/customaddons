@@ -3,54 +3,50 @@
     <data>
 
         <record id="product_normal_form_view_altinkaya_stock" model="ir.ui.view">
-              <field name="name">Altinkaya Product Customization</field>
-              <field name="model">product.product</field>
-              <field name="inherit_id" ref="product.product_normal_form_view"/>
-              <field name="priority" eval="40"/>
-              <field name="arch" type="xml">
-                  <xpath expr="//field[@name='attribute_value_ids']" position="before">
-                      <field name="domain_attribute_value_ids" invisible="1"/>
-                  </xpath>
-                  <xpath expr="//field[@name='attribute_value_ids']" position="attributes">
-                      <attribute name="readonly">0</attribute>
-                      <attribute name="domain">[('id','in',domain_attribute_value_ids)]</attribute>
-                      <attribute name="options">{'no_create':True,'no_edit':True}</attribute>
-                      <attribute name="placeholder">Product Attribute Values</attribute>
-                  </xpath>
-                  <xpath expr="//field[@name='product_tmpl_id']" position="attributes">
-                      <attribute name="readonly">0</attribute>
-                      <attribute name="invisible">0</attribute>
-                      <attribute name="placeholder">Product Template</attribute>
-                  </xpath>
-                  <xpath expr="//field[@name='uom_po_id']" position="after">
-                      <field name="responsible_employee_id"/>
-                  </xpath>
-                  <button name="action_view_stock_move_lines" position="before">
-                       <button string="Yapılacak Hareketler"
-                            type="object"
-                            name= "action_view_todo_moves"
-                            attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}"
-                            class="oe_stat_button" icon="fa-arrows-v"
-                            groups="stock.group_stock_user"/>
-                  </button>
+            <field name="name">Altinkaya Product Customization</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="priority" eval="40"/>
+            <field name="arch" type="xml">
+            <!-- TODO: attribute logic changed in v13. migrate the fields and views -->
+                <!-- <xpath expr="//field[@name='attribute_value_ids']" position="before">
+                    <field name="domain_attribute_value_ids" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='attribute_value_ids']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                    <attribute name="domain">[('id','in',domain_attribute_value_ids)]</attribute>
+                    <attribute name="options">{'no_create':True,'no_edit':True}</attribute>
+                    <attribute name="placeholder">Product Attribute Values</attribute>
+                </xpath> -->
+                <xpath expr="//field[@name='product_tmpl_id']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                    <attribute name="invisible">0</attribute>
+                    <attribute name="placeholder">Product Template</attribute>
+                </xpath>
+                <xpath expr="//field[@name='uom_po_id']" position="after">
+                    <field name="responsible_employee_id"/>
+                </xpath>
+                <button name="action_view_stock_move_lines" position="before">
+                    <button string="Yapılacak Hareketler" type="object" name= "action_view_todo_moves" attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}" class="oe_stat_button" icon="fa-arrows-v" groups="stock.group_stock_user"/>
+                </button>
 
-              </field>
+            </field>
         </record>
 
-    <record id="stock_move_line_action" model="ir.actions.act_window">
+        <record id="stock_move_line_action" model="ir.actions.act_window">
             <field name="name">Yapılacak Hareketler</field>
             <field name="res_model">stock.move</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="view_type">form</field>
+
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="stock.view_move_tree_receipt_picking"/>
             <field name="context">{'search_default_future': 1}</field>
             <field name="help" type="html">
-              <p class="o_view_nocontent_empty_folder">
+                <p class="o_view_nocontent_empty_folder">
                 Bu ürün için yapılacak hareketleri yok.
-              </p>
+                </p>
             </field>
-    </record>
+        </record>
 
 
         <record id="product_variant_button_altinkaya_stock" model="ir.ui.view">
@@ -59,9 +55,9 @@
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
             <field name="priority" eval="1"/>
             <field name="arch" type="xml">
-                <xpath expr="//button[@name='150']" position="attributes">
+                <!-- <xpath expr="//button[@name='150']" position="attributes">
                     <attribute name="attrs">{'invisible':0}</attribute>
-                </xpath>
+                </xpath> -->
                 <xpath expr="//div[@name='options']" position='inside'>
                     <xpath expr="//field[@name='categ_id']" position='move'>
                     </xpath>
@@ -70,59 +66,58 @@
         </record>
 
 
-    <record id="product_product_tree_price_view" model="ir.ui.view">
-        <field name="name">product.product.price.tree</field>
-        <field name="model">product.product</field>
-        <field name="inherit_id" ref="product.product_product_tree_view" />
-        <field name="arch" type="xml">
-            <field name="lst_price" position="replace">
-                <field name="attr_price"/>
-            </field>
-            <xpath expr="//field[@name='attr_price']" position="attributes">
+        <record id="product_product_tree_price_view" model="ir.ui.view">
+            <field name="name">product.product.price.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view" />
+            <field name="arch" type="xml">
+                <field name="lst_price" position="replace">
+                    <field name="attr_price"/>
+                </field>
+                <xpath expr="//field[@name='attr_price']" position="attributes">
                     <attribute name="string">Satış Fiyatı</attribute>
-            </xpath>
-        </field>
-    </record>
-
-
-    <record id="view_product_category_form" model="ir.ui.view">
-        <field name="model">product.category</field>
-        <field name="inherit_id" ref="product.product_category_form_view"/>
-        <field name="arch" type="xml">
-            <field name="barcode_rule_id" position="after">
-                <field name="currency_id"/>
+                </xpath>
             </field>
-        </field>
-    </record>
+        </record>
 
-                <record id="view_product_form_inherit_custom_available" model="ir.ui.view">
+
+        <record id="view_product_category_form" model="ir.ui.view">
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <field name="parent_id" position="after">
+                    <field name="currency_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_product_form_inherit_custom_available" model="ir.ui.view">
             <field name="name">product.product.normal.form.inherit.custom_available</field>
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
-                <button name="action_print_label" position="after">
-                	<button name="single_product_update_quant_reservation" string="Fix Quant Reservation"
-                	 type="object" icon="fa-refresh"/>
-                </button>
+                <!-- <button name="action_print_label" position="after">
+                    <button name="single_product_update_quant_reservation" string="Fix Quant Reservation" type="object" icon="fa-refresh"/>
+                </button> -->
 
-	            <xpath expr="//group[@name='operations']" position="before">
-					<group name="Merkezdepo" string="Merkez Depo">
-					<field name="qty_available_merkez" widget="uom"/>
-					<field name="qty_incoming_merkez" widget="uom"/>
-					<field name="qty_outgoing_merkez" widget="uom"/>
-					<field name="qty_virtual_merkez" widget="uom"/>
-					</group>
-					<group name="Sincandepo" string="Sincan Depo">
-					<field name="qty_available_sincan" widget="uom"/>
-					<field name="qty_incoming_sincan" widget="uom"/>
-					<field name="qty_outgoing_sincan" widget="uom"/>
-					<field name="qty_virtual_sincan" widget="uom"/>
-					</group>
+                <xpath expr="//group[@name='operations']" position="before">
+                    <group name="Merkezdepo" string="Merkez Depo">
+                        <field name="qty_available_merkez" widget="uom"/>
+                        <field name="qty_incoming_merkez" widget="uom"/>
+                        <field name="qty_outgoing_merkez" widget="uom"/>
+                        <field name="qty_virtual_merkez" widget="uom"/>
+                    </group>
+                    <group name="Sincandepo" string="Sincan Depo">
+                        <field name="qty_available_sincan" widget="uom"/>
+                        <field name="qty_incoming_sincan" widget="uom"/>
+                        <field name="qty_outgoing_sincan" widget="uom"/>
+                        <field name="qty_virtual_sincan" widget="uom"/>
+                    </group>
 
 
-	            </xpath>
+                </xpath>
 
-	<!--            <xpath expr="//field[@name='type']" position="after">
+                <!--            <xpath expr="//field[@name='type']" position="after">
 	            	<field name="type_variant"/>
 
 	            </xpath>

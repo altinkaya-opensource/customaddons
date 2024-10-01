@@ -39,7 +39,7 @@ class StockWarehouseOrderpoint(models.Model):
         compute='_compute_done_orderlines'
     )
 
-    @api.multi
+    
     @api.depends('product_id')
     def _compute_productions(self):
         for wizard in self:
@@ -47,7 +47,7 @@ class StockWarehouseOrderpoint(models.Model):
                                                                        ('state', 'not in', ['cancel'])],
                                                                       order='create_date desc')
 
-    @api.multi
+    
     @api.depends('product_id')
     def _compute_customer_transfers(self):
         for wizard in self:
@@ -55,7 +55,7 @@ class StockWarehouseOrderpoint(models.Model):
                                                                               ('state', 'not in', ['draft', 'cancel'])],
                                                                              order='create_date desc')
 
-    @api.multi
+    
     @api.depends('product_id')
     def _compute_done_purchaselines(self):
         for wizard in self:
@@ -64,7 +64,7 @@ class StockWarehouseOrderpoint(models.Model):
                  ('state', 'not in', ['draft', 'cancel'])],
                 limit=40, order='create_date desc')
 
-    @api.multi
+    
     @api.depends('product_id')
     def _compute_done_orderlines(self):
         for wizard in self:

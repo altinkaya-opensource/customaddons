@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <odoo>
-
     <record id="view_stock_split_picking_line_window" model="ir.ui.view">
         <field name="model">split.stock.move.picking</field>
         <field name="arch" type="xml">
@@ -15,23 +14,12 @@
 
                 </group>
                 <footer>
-                    <button name="action_split" class="btn btn-primary" string="Böl" type="object"/>
+                    <button name="action_split" class="btn btn-primary" string="Split" type="object"/>
                     or
                     <button special="cancel" class="btn btn-secondary" string="İptal"/>
                 </footer>
             </form>
         </field>
     </record>
-
-    <act_window
-            id="action_stock_split_picking_line"
-            res_model="split.stock.move.picking"
-            src_model="stock.picking"
-            target="new"
-            name="Satırı Böl"
-            view_id="view_stock_split_picking_line_window"
-            context="{'default_move_id': active_id}"
-            domain="[('move_id','=', active_id)]"
-    />
-
+    <act_window id="action_stock_split_picking_line" res_model="split.stock.move.picking" binding_model="stock.picking" target="new" name="Split Lines" view_id="view_stock_split_picking_line_window" context="{'default_move_id': active_id}" domain="[('move_id','=', active_id)]" />
 </odoo>

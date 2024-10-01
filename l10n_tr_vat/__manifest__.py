@@ -1,7 +1,7 @@
 
 {
     'name': 'Vat Localization TR ',
-    'version': '8.0.2',
+    'version': '13.0.0.1.0',
     'website': 'https://www.odoo.com',
     'author': 'Kirankumar,Codequarters,OnurUgur',
     'category': 'Vat',

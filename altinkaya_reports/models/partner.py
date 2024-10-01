@@ -31,11 +31,11 @@ class Partner(models.Model):
 
     # use_secondary_currency = fields.Boolean(string="Ekstrede çift para birimi yazdır",default=False)
 
-    @api.multi
+    
     def _get_statement_data_currency(self, data=None):
         return self._get_statement_data(self)
 
-    @api.multi
+    
     def _get_statement_data(self, data=None):
         # self = self.with_context(lang=self.commercial_partner_id.lang)
         statement_data2 = {}

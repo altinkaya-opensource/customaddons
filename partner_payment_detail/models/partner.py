@@ -22,11 +22,11 @@ from odoo import fields, models, api
 import odoo.addons.decimal_precision as dp
 
 
-class AccountInvoice(models.Model):
-    _inherit = 'account.invoice'
+class AccountMove(models.Model):
+    _inherit = 'account.move'
     total_balance = fields.Float(string='Total Balance', readonly=True)
 
-    @api.multi
+    
     @api.depends('partner_id')
     def partner_balance(self, partner_id):
         partner = self.env['res.partner'].browse(partner_id)
@@ -40,7 +40,7 @@ class AccountInvoice(models.Model):
     def create(self, vals):
         if vals.get('partner_id'):
             vals['total_balance'] = self.partner_balance(vals['partner_id'])
-        return super(AccountInvoice, self).create( vals)
+        return super(AccountMove, self).create( vals)
 
     def write(self, vals):
         for invoice in self:
@@ -49,5 +49,5 @@ class AccountInvoice(models.Model):
             else:
                 partner_id = invoice.partner_id.id
             vals['total_balance'] = self.partner_balance(partner_id)
-        return super(AccountInvoice, self).write(vals)
+        return super(AccountMove, self).write(vals)
 

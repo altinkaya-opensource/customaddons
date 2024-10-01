@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 class ChangeProductionQty(models.TransientModel):
     _inherit = "change.production.qty"
 
-    @api.multi
+    
     def change_prod_qty(self):
         """When the production quantity is changed,
         also change the quantity of related moves"""
@@ -33,7 +33,7 @@ class ChangeProductionQty(models.TransientModel):
                     ).write({"product_uom_qty": wizard.product_qty})
         return res
 
-    @api.multi
+    
     def _check_change_permitted(self):
         """Check increase or decrease percentage is not more than 10%"""
         for wizard in self:

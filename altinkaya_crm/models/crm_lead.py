@@ -26,7 +26,7 @@ class CRMLead(models.Model):
         store=False,
     )
 
-    @api.multi
+    
     def _compute_my_team_activity(self):
         for lead in self:
             if self.env.user in lead.team_id.member_ids:

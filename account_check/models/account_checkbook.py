@@ -101,13 +101,13 @@ class AccountCheckbook(models.Model):
         'report with name "check_report" will be used',
     )
 
-    @api.multi
+    
     @api.depends('sequence_id.number_next_actual')
     def _compute_next_number(self):
         for rec in self:
             rec.next_number = rec.sequence_id.number_next_actual
 
-    @api.multi
+    
     def _inverse_next_number(self):
         for rec in self.filtered('sequence_id'):
             rec.sequence_id.sudo().number_next_actual = rec.next_number
@@ -119,7 +119,7 @@ class AccountCheckbook(models.Model):
             rec._create_sequence(vals.get('next_number', 0))
         return rec
 
-    @api.multi
+    
     def _create_sequence(self, next_number):
         """ Create a check sequence for the checkbook """
         for rec in self:
@@ -134,7 +134,7 @@ class AccountCheckbook(models.Model):
                 'company_id': rec.journal_id.company_id.id,
             })
 
-    @api.multi
+    
     def _compute_name(self):
         for rec in self:
             if rec.issue_check_subtype == 'deferred':
@@ -145,7 +145,7 @@ class AccountCheckbook(models.Model):
                 name += _(' up to %s') % rec.range_to
             rec.name = name
 
-    @api.multi
+    
     def unlink(self):
         if self.mapped('issue_check_ids'):
             raise ValidationError(

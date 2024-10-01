@@ -14,7 +14,7 @@ from odoo import models, fields, api, _
 class res_partner(models.Model):
     _inherit = 'res.partner'
 
-    @api.multi
+    
     def open_partner_invoice_analysis(self):
         invoice_analysis_view_ref = self.env.ref('account.view_account_invoice_report_graph').id
         view_id = invoice_analysis_view_ref and invoice_analysis_view_ref or False,

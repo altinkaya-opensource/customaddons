@@ -67,7 +67,7 @@ class AccountCheckOperation(models.Model):
     )
     notes = fields.Text(string="Operation Note")
 
-    @api.multi
+    
     def unlink(self):
         for rec in self:
             if rec.origin:
@@ -79,7 +79,7 @@ class AccountCheckOperation(models.Model):
                 )
         return super(AccountCheckOperation, self).unlink()
 
-    @api.multi
+    
     @api.depends("origin")
     def _compute_origin_name(self):
         """

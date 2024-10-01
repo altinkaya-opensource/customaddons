@@ -30,7 +30,7 @@ class PurchaseOrder(models.Model):
             if order.partner_id and order.partner_id.property_purchase_pricelist:
                 order.pricelist_id = order.partner_id.property_purchase_pricelist
 
-    @api.multi
+    
     def recalculate_prices(self):
         for line in self.mapped("order_line"):
             dict = line._convert_to_write(line.read()[0])
@@ -45,7 +45,7 @@ class PurchaseOrder(models.Model):
             )
         return True
 
-    @api.multi
+    
     def recompute_descriptions(self):
         for line in self.mapped("order_line"):
             dict = line._convert_to_write(line.read()[0])
@@ -87,7 +87,7 @@ class PurchaseOrderLine(models.Model):
             )
         return res
 
-    @api.multi
+    
     def _get_display_price(self, product):
         supplier_info = product.seller_ids.filtered(
             lambda r: r.name == self.order_id.partner_id
@@ -114,7 +114,7 @@ class PurchaseOrderLine(models.Model):
             final_price = price_currency._convert(
                 final_price,
                 self.order_id.pricelist_id.currency_id,
-                self.order_id.company_id or self.env.user.company_id,
+                self.order_id.company_id or self.env.company,
                 self.order_id.date_order or fields.Date.today(),
             )
         # negative discounts (= surcharge) are included in the display price

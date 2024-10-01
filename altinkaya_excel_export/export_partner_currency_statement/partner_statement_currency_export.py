@@ -39,12 +39,12 @@ class ReportPartnerStatementCurrency(models.TransientModel):
         help='Use compute fields, so there is nothing stored in database',
     )
 
-    @api.multi
+    
     def _get_lines(self):
         for rec in self:
             rec.results = self._get_statement_data(self.partner_id)
 
-    @api.multi
+    
     def _get_statement_data(self, partner_id):
         cr = self.env.cr
         statement_data = []

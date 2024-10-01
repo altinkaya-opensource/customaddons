@@ -33,7 +33,7 @@ class ResPartner(models.Model):
 
 
 
-    @api.multi
+    
     def write(self,values):
         if 'vat' in values:
             if values['vat']:

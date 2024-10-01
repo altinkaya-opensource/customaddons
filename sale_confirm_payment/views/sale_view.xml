@@ -54,7 +54,7 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <button name="action_unlock" position="after">
+            <button name="action_cancel" position="before">
 	            	<button name="action_confirm_payment" type="object" Help="Confirm payment in sale order form"
 	            		string="Confirm Payment" class="ml-2 btn btn-default"
                         attrs="{'invisible':[('state','in', ['draft', 'cancel'])]}"/>

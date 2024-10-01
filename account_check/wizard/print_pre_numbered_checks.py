@@ -8,7 +8,7 @@ class PrintPreNumberedChecks(models.TransientModel):
 
     next_check_number = fields.Integer('Next Check Number', required=True)
 
-    @api.multi
+    
     def print_checks(self):
         check_number = self.next_check_number
         payments = self.env['account.payment'].browse(

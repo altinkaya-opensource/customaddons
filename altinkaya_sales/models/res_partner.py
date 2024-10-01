@@ -69,6 +69,7 @@ class ResPartner(models.Model):
         "Carinin Urunleri", compute="_compute_v_cari_urun_count"
     )
     x_vergino = fields.Char("Vergi No", size=64)
+    tax_office_name = fields.Char('Tax Office', size=64)
     # make country_id is required in res.partner
     country_id = fields.Many2one(required=True)
     segment_id = fields.Many2one(
@@ -140,7 +141,7 @@ class ResPartner(models.Model):
             ):
                 rec.risk_exception = True
 
-    @api.multi
+    
     @api.depends("email")
     def _compute_email_invalid(self):
         for rec in self:
@@ -161,7 +162,7 @@ class ResPartner(models.Model):
         ]
         return action
 
-    @api.multi
+    
     def _compute_v_cari_urun_count(self):
         for rec in self:
             rec.v_cari_urun_count = self.env["product.product"].search_count(

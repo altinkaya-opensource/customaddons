@@ -1,6 +1,6 @@
 {
     'name': 'Altinkaya Stock',
-    'version': '12.0',
+    'version': '13.0.0.1.0',
     'website': 'https://www.altinkaya.com.tr',
     'author':'Ahmet Altınışık,OnurUgur,Codequarters,Yavuz Avcı',
     'category': 'Stock',
@@ -8,7 +8,7 @@
     'description': """
      """,
     'depends': [
-        'stock','delivery', 'delivery_integration_base', 'altinkaya_sales'
+        'stock','delivery', 'delivery_integration_base', 'altinkaya_sales', 'barcodes_generator_product'
     ],
     'data': [
         'views/stock_quant_view.xml',

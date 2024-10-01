@@ -3,7 +3,7 @@ from odoo import api, fields, models
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    @api.multi
+    
     def action_view_mos(self):
         action = self.env.ref('mrp.mrp_production_report').read()[0]
         action['domain'] = [('product_id', 'in', self.ids)]

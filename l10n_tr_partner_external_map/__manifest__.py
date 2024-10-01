@@ -1,6 +1,6 @@
 {
     'name': 'Partner External Map For Turkey',
-    'version': '12.0.2',
+    'version': '13.0.2',
     'summary': "Add Partner external Map to Neigbour",
     'description': """This Module is used to add custom field in res.partner Object""",
     'category': 'Partner',

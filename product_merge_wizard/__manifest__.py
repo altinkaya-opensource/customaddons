@@ -3,7 +3,7 @@
     'name' : 'Product Merge Wizard',
     'author' : 'CODEQUARTERS',
     'website' : "http://www.codequarters.com",
-    'version' : "12.0.1",
+    'version' : "13.0.1",
     'depends' : ['product'],
     'description': """
 	This module introduces a wizard to merge products in a single template.

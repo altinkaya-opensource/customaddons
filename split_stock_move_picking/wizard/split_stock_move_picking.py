@@ -13,7 +13,7 @@ class SplitStockMovePicking(models.TransientModel):
     qty = fields.Float('Bölmek istediğiniz miktar')
     after_split_qty = fields.Float("Bölünmeden sonra miktar", readonly=True)
 
-    @api.multi
+    
     def action_split(self):
         if self.requested_qty - self.qty < 0.0:
             raise UserError(_(

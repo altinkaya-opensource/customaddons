@@ -1,7 +1,7 @@
 {
     "name": "Sale Payment",
     "summary": "Payment button in sale order",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "category": "Sales",
     "author": "yibudak, Terrabit",
     "website": "https://altinkaya.com.tr",

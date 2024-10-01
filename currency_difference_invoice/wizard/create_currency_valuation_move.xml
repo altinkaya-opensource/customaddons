@@ -20,11 +20,11 @@
             </field>
         </record>
 
-        <act_window id="action_res_partner_currency_valuation_move"
+        <!-- <act_window id="action_res_partner_currency_valuation_move"
                     multi="True"
                     key2="client_action_multi" name="Create Currency Valuation Move"
                     res_model="create.currency.valuation.move" src_model="res.partner"
-                    view_mode="form" target="new" view_type="form"/>
+                    view_mode="form" target="new" view_type="form"/> -->
 
 
     </data>

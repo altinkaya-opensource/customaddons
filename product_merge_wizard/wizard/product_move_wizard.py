@@ -66,7 +66,7 @@ class ProductMoveWizard(models.TransientModel):
             }
         }
 
-    @api.multi
+    
     def action_move(self):
         self.ensure_one()
         self.product_id.write(

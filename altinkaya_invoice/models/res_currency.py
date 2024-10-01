@@ -4,7 +4,7 @@ from datetime import datetime
 class ResCurrency(models.Model):
     _inherit = 'res.currency'
 
-    @api.multi
+    
     def convert_currency_rate(self, from_amount, to_currency, company, date):
         to_currency_id = self.env['res.currency'].browse(to_currency)
         company_id = self.env['res.company'].browse(company)

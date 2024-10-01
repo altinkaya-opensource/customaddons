@@ -7,9 +7,9 @@
         <!--        <field name="mode"></field>-->
         <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
         <field name="arch" type="xml">
-            <filter name="filter_order_date" position="after">
+            <filter name="filter_create_date" position="after">
                 <separator/>
-                <filter name="lastweek" string="Last Week"
+                <!-- <filter name="lastweek" string="Last Week"
                         domain="[('date_order','&gt;=', (context_today() + relativedelta(weeks=-2, days=1, weekday=0)).strftime('%Y-%m-%d 00:00:00')),
                                  ('date_order','&lt;=', (context_today() + relativedelta(weeks=-1, weekday=5)).strftime('%Y-%m-%d 23:59:59'))]"/>
                 <filter name="lastmonth" string="Last Month"
@@ -17,7 +17,7 @@
                                  ('date_order','&lt;', context_today().strftime('%Y-%m-01 00:00:00'))]"/>
                 <filter name="lastyear" string="Last Year"
                         domain="[('date_order','&gt;=', (context_today() + relativedelta(years=-1)).strftime('%Y-01-01 00:00:00')),
-                                 ('date_order','&lt;', context_today().strftime('%Y-01-01 00:00:00'))]"/>
+                                 ('date_order','&lt;', context_today().strftime('%Y-01-01 00:00:00'))]"/> -->
             </filter>
         </field>
     </record>
@@ -31,7 +31,7 @@
         <field name="arch" type="xml">
             <xpath expr="//filter[@name='order_date']" position="after">
                 <separator/>
-                <filter name="lastweek" string="Last Week"
+                <!-- <filter name="lastweek" string="Last Week"
                         domain="[('confirmation_date', '&gt;=', (context_today()+relativedelta(weeks=-2, weekday=0)).strftime('%Y-%m-%d 00:00:00')),
                                  ('confirmation_date', '&lt;=', (context_today()+relativedelta(weeks=-1, weekday=5)).strftime('%Y-%m-%d 23:59:59'))]"/>
                 <filter name="lastmonth" string="Last Month"
@@ -39,7 +39,7 @@
                                  ('confirmation_date','&lt;', context_today().strftime('%Y-%m-01 00:00:00'))]"/>
                 <filter name="lastyear" string="Last Year"
                         domain="[('confirmation_date','&gt;=', (context_today() + relativedelta(years=-1)).strftime('%Y-01-01 00:00:00')),
-                                 ('confirmation_date','&lt;', context_today().strftime('%Y-01-01 00:00:00'))]"/>
+                                 ('confirmation_date','&lt;', context_today().strftime('%Y-01-01 00:00:00'))]"/> -->
             </xpath>
             <xpath expr="//filter[@name='order_date']" position="replace">
                 <filter string="Order Date Confirmation" name="order_date" date="confirmation_date"/>
@@ -53,8 +53,9 @@
         <field name="inherit_id" ref="sale.view_sales_order_filter"/>
         <field name="arch" type="xml">
             <xpath expr="//group/filter[@name='order_month']" position="after">
-                <filter string="Order State" name="orderstate" domain="[]"
-                        context="{'group_by':'order_state'}"/>
+            <!-- TODO: migration -->
+                <!-- <filter string="Order State" name="orderstate" domain="[]"
+                        context="{'group_by':'order_state'}"/> -->
             </xpath>
         </field>
     </record>

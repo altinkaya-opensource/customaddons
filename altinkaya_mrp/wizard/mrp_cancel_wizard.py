@@ -6,7 +6,7 @@ class mrp_cancel_more(models.TransientModel):
     _name = 'mrp.cancel.more'
     _description="Mrp Cancel More"
 
-    @api.multi
+    
     def cancel_mrp_order(self):
         """ Cancels the production order and related stock moves.
         @return: True
@@ -17,7 +17,7 @@ class mrp_cancel_more(models.TransientModel):
             production.action_cancel()
         return True
 
-    @api.multi
+    
     def action_cancel(self):
         """ Cancels production order, unfinished stock moves and set procurement
         orders in exception """

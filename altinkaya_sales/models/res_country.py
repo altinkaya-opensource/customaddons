@@ -17,7 +17,7 @@ class ResCountry(models.Model):
         )
         return [
             ("currency_id", "=", currency_id.id),
-            ("partner_id", "=", self.env.user.company_id.partner_id.id),
+            ("partner_id", "=", self.env.company.partner_id.id),
         ]
 
     default_currency_id = fields.Many2one(

@@ -36,7 +36,7 @@ class MakeMtsMove(models.TransientModel):
             production.action_cancel()
         moves_no_production._action_cancel()
 
-    @api.multi
+    
     def action_confirm(self):
         self.ensure_one()
         propagate = self.move_id.propagate

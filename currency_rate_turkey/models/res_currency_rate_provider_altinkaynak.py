@@ -28,7 +28,7 @@ class ResCurrencyRateProviderTCMB(models.Model):
         required=True,
     )
 
-    @api.multi
+    
     def _get_supported_currencies(self):
         self.ensure_one()
         if self.service != "altinkaynak":
@@ -55,7 +55,7 @@ class ResCurrencyRateProviderTCMB(models.Model):
             "KWD",
         ]
 
-    @api.multi
+    
     def _obtain_rates(self, base_currency, currencies, date_from, date_to):
         self.ensure_one()
         if self.service != "altinkaynak":

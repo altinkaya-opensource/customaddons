@@ -28,8 +28,8 @@ class AccountPartialReconcile(models.Model):
         total = sum(aml.amount_residual for aml in aml_to_fix)
         created_lines = self.env['account.move.line']
         currency_id = aml_to_fix[0].partner_id.property_account_receivable_id.currency_id
-        # amount_in_currency = self.env.user.company_id.currency_id._convert(abs(total), currency_id,
-        #                                            self.env.user.company_id,fields.Date.today())
+        # amount_in_currency = self.env.company.currency_id._convert(abs(total), currency_id,
+        #                                            self.env.company,fields.Date.today())
         # create the line that will compensate all the aml_to_fix
         line_to_rec = aml_model.with_context(check_move_validity=False).create({
             'name': _('Currency exchange rate difference'),
@@ -72,7 +72,7 @@ class AccountPartialReconcile(models.Model):
 class AccountFullReconcile(models.Model):
     _inherit = "account.full.reconcile"
 
-    @api.multi
+    
     def get_report_data(self):
         """Returns report dictionary for currency difference report for reconcilation"""
 
@@ -121,7 +121,7 @@ class AccountFullReconcile(models.Model):
 
         return res
 
-    @api.multi
+    
     def unlink(self):
         """ When removing a full reconciliation, we choose to remove partial reconciliations also
 

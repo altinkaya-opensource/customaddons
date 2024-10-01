@@ -11,7 +11,7 @@ class CurrencyRate(models.Model):
         help="The inverse rate of the currency",
     )
 
-    @api.multi
+    
     @api.depends("rate")
     def _compute_rate_inverse(self):
         for rate in self:

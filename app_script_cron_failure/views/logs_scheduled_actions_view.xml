@@ -14,8 +14,6 @@
         <record id="logs_form_view" model="ir.ui.view">
             <field name="name">logs.action.form</field>
             <field name="model">logs.action</field>
-            <field name="view_type">form</field>
-            <field name="view_type">form</field>
             <field name="arch" type="xml">
                 <form string="Logs">
                     <header>
@@ -67,7 +65,6 @@
         <record id="ir_cron_act_logs" model="ir.actions.act_window">
             <field name="name">Logs Scheduled Actions</field>
             <field name="res_model">logs.action</field>
-            <field name="view_type">form</field>
             <field name="view_mode">form,tree</field>
             <field name="view_id" ref="logs_tree_view" />
         </record>

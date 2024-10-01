@@ -15,7 +15,7 @@ _logger = logging.getLogger(__name__)
 class ResCurrencyRateProviderSecondRate(models.Model):
     _inherit = "res.currency.rate.provider"
 
-    @api.multi
+    
     def _update(self, date_from, date_to, newest_only=False):
         Currency = self.env["res.currency"]
         CurrencyRate = self.env["res.currency.rate"]

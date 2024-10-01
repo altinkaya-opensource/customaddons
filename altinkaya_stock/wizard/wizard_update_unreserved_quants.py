@@ -15,7 +15,7 @@ class UpdateUnreservedQuants(models.TransientModel):
     _name = 'update.unreserved.quants'
     _description = 'Update Unreserved Quants'
 
-    @api.multi
+    
     def action_update_unreserved_quants(self):
         """
         Fix unreserved quants.

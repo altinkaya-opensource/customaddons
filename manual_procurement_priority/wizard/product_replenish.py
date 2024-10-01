@@ -9,7 +9,7 @@ class ProductReplenish(models.TransientModel):
     priority = fields.Selection([('0', 'Acil Değil'), ('1', 'Normal'), ('2', 'Acil'), ('3', 'Çok Acil')],
                                 'Öncelik', default='1')
 
-    @api.multi
+    
     def launch_replenishment(self):
         uom_reference = self.product_id.uom_id
         self.quantity = self.product_uom_id._compute_quantity(self.quantity, uom_reference)

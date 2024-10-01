@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Altinkaya Invoice",
-    "version": "12.0",
+    "version": "13.0.0.1.0",
     "category": "General",
     "depends": ["base", "account", "sale", "stock", "sale_stock", "delivery"],
     "author": "MAkifOzdemir,Codequarters,Acespritech Solutions Pvt. Ltd.,Yavuz Avcı",

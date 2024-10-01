@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 class AccountBankStatementLine(models.Model):
     _inherit = "account.bank.statement.line"
 
-    @api.multi
+    
     def button_cancel_reconciliation(self):
         """ Delete operation of checks that are debited from statement
         """

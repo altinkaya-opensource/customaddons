@@ -17,3 +17,16 @@ class AccountMove(models.Model):
                 if partner and partner.property_rate_field != "rate":
                     self = self.with_context(rate_type=partner.property_rate_field)
         return super(AccountMove, self).create(vals_list)
+
+    # TODO: migration, could be removed in future
+    # def action_move_create(self):
+    #     new_context = self._context.copy()
+    #     if self.partner_id.property_rate_field != "rate" and not self.use_custom_rate:
+    #         new_context.update(
+    #             {
+    #                 "rate_type": self.partner_id.property_rate_field,
+    #             }
+    #         )
+    #     return super(
+    #         AccountMove, self.with_context(new_context)
+    #     ).action_move_create()

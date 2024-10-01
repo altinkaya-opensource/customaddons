@@ -8,7 +8,7 @@ from odoo.tools import float_is_zero
 class MrpProductProduce(models.TransientModel):
     _inherit = "mrp.product.produce"
 
-    @api.multi
+    
     def do_produce(self):
         """Override do_produce method on MRP to generate lot_id automatically"""
         if any(
@@ -59,6 +59,6 @@ class MrpProductProduceLine(models.TransientModel):
     location_src_id = fields.Many2one(
         "stock.location",
         "Raw Materials Location",
-        related="product_produce_id.production_id.location_src_id",
+        related="raw_product_produce_id.production_id.location_src_id",
         readonly=True,
     )

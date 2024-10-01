@@ -19,7 +19,7 @@ class CRMClaim(models.Model):
             rec.model_ref_id.crm_claim_ids = [(4, rec.id)]
         return res
 
-    @api.multi
+    
     def unlink(self):
         for rec in self:
             rec.model_ref_id.crm_claim_ids = [(3, rec.id)]

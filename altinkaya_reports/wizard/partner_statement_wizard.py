@@ -32,7 +32,7 @@ class WizarPartnerStatement(models.TransientModel):
             res['english_statement'] = True
         return res
 
-    @api.multi
+    
     def print_report(self):
         report_name = 'altinkaya_reports.partner_statement_altinkaya'
         context = dict(self.env.context)
@@ -48,7 +48,7 @@ class WizarPartnerStatement(models.TransientModel):
 class IrActionsReport(models.Model):
     _inherit = 'ir.actions.report'
 
-    @api.multi
+    
     def render_qweb_pdf(self, res_ids=None, data=None):
         if self.report_name.startswith('altinkaya_reports.report_partner_statement') and not res_ids:
             res_ids = self.env.context.get('partner_ids', [])

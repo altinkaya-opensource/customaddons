@@ -28,7 +28,7 @@ class AccountJournal(models.Model):
             rec._create_checkbook()
         return rec
 
-    @api.multi
+    
     def _create_checkbook(self):
         """ Create a check sequence for the journal """
         for rec in self:
@@ -60,7 +60,7 @@ class AccountJournal(models.Model):
 # For dashboard
 ###############
 
-    @api.multi
+    
     def get_journal_dashboard_datas(self):
         domain_holding_third_checks = [
             ('type', '=', 'third_check'),
@@ -106,7 +106,7 @@ class AccountJournal(models.Model):
                 currency_obj=self.company_id.currency_id),
         )
 
-    @api.multi
+    
     def open_action_checks(self):
         check_type = self.env.context.get('check_type', False)
         if check_type == 'third_check':
@@ -122,7 +122,7 @@ class AccountJournal(models.Model):
         action_read['context'] = context
         return action_read
 
-    @api.multi
+    
     def action_checks_to_numerate(self):
         return {
             'name': _('Checks to Print and Numerate'),

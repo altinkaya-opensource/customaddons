@@ -19,7 +19,7 @@ class product_product(models.Model):
     
     variant_route_num = fields.Integer('Variant Routes',compute='_compute_variant_routes')
     
-    @api.one
+    
     @api.depends('variant_route_ids')
     def _compute_variant_routes(self):
         self.variant_route_num = len(self.variant_route_ids)

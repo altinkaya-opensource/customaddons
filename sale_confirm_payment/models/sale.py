@@ -41,7 +41,7 @@ class SaleOrder(models.Model):
         store=True,
     )
 
-    @api.multi
+    
     def action_confirm_payment(self):
         aw_obj = self.env["ir.actions.act_window"]
         action = aw_obj.for_xml_id(

@@ -10,7 +10,7 @@ class CreateCurrencyValuationMove(models.TransientModel):
         string="Move Date", required=True, default=fields.Date.context_today
     )
 
-    @api.multi
+    
     def create_move(self):
         context = dict(self._context or {})
         active_ids = context.get("active_ids", []) or []

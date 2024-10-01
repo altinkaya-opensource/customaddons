@@ -35,6 +35,8 @@
         "delivery_package_barcode",
         "portal",
         "sale_stock",
+        "stock_picking_invoicing",  # TODO: This module needs to be migrated from our codebase.
+        "sale_variant_configurator",
     ],
     "author": "MAkifOzdemir,Codequarters,Acespritech Solutions Pvt. Ltd.,Yavuz Avcı",
     "description": """
@@ -50,7 +52,7 @@
         "views/pricelist.xml",
         "views/res_partner.xml",
         "data/mail_data.xml",
-        "views/portal_templates.xml",
+        # "views/portal_templates.xml", # TODO: migration needed
         "data/sale_portal_data.xml",
         "views/sale_portal_templates.xml",
         "views/res_partner_segment_view.xml",

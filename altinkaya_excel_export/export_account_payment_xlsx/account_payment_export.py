@@ -16,7 +16,7 @@ class ReportAccountPayment(models.TransientModel):
         help='Use compute fields, so there is nothing stored in database',
     )
 
-    @api.multi
+    
     def _get_payments(self):
         selected_ids = self.env.context.get('active_ids', [])
         ids = self.env['account.payment'].browse(selected_ids)

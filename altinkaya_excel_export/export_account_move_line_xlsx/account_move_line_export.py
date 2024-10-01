@@ -16,7 +16,7 @@ class ReportAccountMoveLine(models.TransientModel):
         help='Use compute fields, so there is nothing stored in database',
     )
 
-    @api.multi
+    
     def _get_move_lines(self):
         selected_ids = self.env.context.get('active_ids', [])
         ids = self.env['account.move.line'].browse(selected_ids)

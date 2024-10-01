@@ -1,20 +1,18 @@
-
 {
-    'name': 'Order Line Discount',
-    'version': '12.0.1',
-    'website': 'https://www.codequarters.com',
-    'category': 'Sales',
-    'summary': 'Sale Order Line Discount',
-    'description': """
+    "name": "Order Line Discount",
+    "version": "13.0.0.1.0",
+    "website": "https://www.codequarters.com",
+    "category": "Sales",
+    "summary": "Sale Order Line Discount",
+    "description": """
 	 """,
-    'depends': [
-        'sale',
+    "depends": [
+        "sale",
     ],
-    'data': [
-            'wizard/update_discount_view.xml',
-            'views/sale_order_view.xml',
-            
+    "data": [
+        "wizard/update_discount_view.xml",
+        "views/sale_order_view.xml",
     ],
-    'installable' : True,
-    'auto_install' : False,
+    "installable": True,
+    "auto_install": False,
 }

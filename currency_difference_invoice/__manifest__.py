@@ -12,11 +12,11 @@
     "website": "https://github.com/yibudak",
     "category": "Accounting",
     "version": "0.1",
-    "depends": ["base", "account"],
+    "depends": ["base", "account", "change_partner_accounts"],
     "data": [
         "views/res_partner_view.xml",
         "views/res_company_view.xml",
-        "views/account_invoice_view.xml",
+        "views/account_move_view.xml",
         "wizard/create_currency_difference_invoices.xml",
         "wizard/account_invoice_switch_incomings.xml",
         "wizard/create_currency_valuation_move.xml",

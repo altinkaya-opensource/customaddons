@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    @api.multi
+    
     def _address_as_string(self):
         self.ensure_one()
         addr = []

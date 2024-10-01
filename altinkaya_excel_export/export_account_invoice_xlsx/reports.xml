@@ -4,7 +4,7 @@
 
     <record id="report_account_invoice" model="ir.ui.view">
         <field name="name">report.account.invoice</field>
-        <field name="model">report.account.invoice</field>
+        <field name="model">report.account.move</field>
         <field name="inherit_id" ref="excel_import_export.xlsx_report_view"/>
         <field name="mode">primary</field>
         <field name="arch" type="xml">

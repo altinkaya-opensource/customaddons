@@ -14,28 +14,28 @@ class ResUsers(models.Model):
     view_access = fields.Many2many('ir.ui.view', string='Views', compute ="_compute_view_access")
     
     
-    @api.one
+    
     @api.depends("groups_id")
     def _compute_model_access(self):
         self.model_access = False
         for g in self.groups_id:
             self.model_access |= g.model_access
             
-    @api.one
+    
     @api.depends("groups_id")
     def _compute_rule_groups(self):
         self.rule_groups = False
         for g in self.groups_id:
             self.rule_groups |= g.rule_groups
     
-    @api.one
+    
     @api.depends("groups_id")
     def _compute_menu_access(self):
         self.menu_access = False
         for g in self.groups_id:
             self.menu_access |= g.menu_access
     
-    @api.one
+    
     @api.depends("groups_id")
     def _compute_view_access(self):
         self.view_access = False

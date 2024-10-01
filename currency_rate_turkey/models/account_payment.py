@@ -8,7 +8,7 @@ from odoo import models, fields, api
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
-    @api.multi
+    
     def post(self):
         new_context = self._context.copy()
         if self.partner_id.property_rate_field != "rate":

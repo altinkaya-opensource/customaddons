@@ -36,7 +36,7 @@ class wizard_partner_detail(models.TransientModel):
         "End Date", required=True, default=lambda *a: time.strftime("%Y-%m-%d")
     )
 
-    @api.multi
+    
     def print_report(self):
         record = self
         ResPartner = self.env["res.partner"]
@@ -142,7 +142,7 @@ class CustomerExcel(models.Model):
     file = fields.Binary("File")
     name = fields.Char(string="File Name", size=64)
 
-    @api.multi
+    
     def download_xlsx(self):
         return {
             "name": "Report",

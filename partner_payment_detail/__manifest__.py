@@ -19,20 +19,19 @@
 #
 ##############################################################################
 {
-    'name': 'Partner Payment Detail',
-    'author': 'Acespritech Solutions Pvt. Ltd.',
-    'website': 'http://www.acespritech.com',
-    'version': '1.0',
-    'category': 'Account',
-    'description': """
+    "name": "Partner Payment Detail",
+    "author": "Acespritech Solutions Pvt. Ltd.",
+    "website": "http://www.acespritech.com",
+    "version": "13.0.0.1.0",
+    "category": "Account",
+    "description": """
 Calculate total based on the payable and receivable amount on the partner
     """,
-    'depends': ['base', 'account'],
-    "data" : [
-                'security/ir.model.access.csv',
-         "wizard/partner_detail_wizard_view.xml",
+    "depends": ["base", "account"],
+    "data": [
+        # 'security/ir.model.access.csv', # TODO: migration
+        #  "wizard/partner_detail_wizard_view.xml", # TODO: migration
         "views/partner_view.xml",
-       
     ],
-    'installable': True,
+    "installable": True,
 }

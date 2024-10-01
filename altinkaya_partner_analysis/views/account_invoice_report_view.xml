@@ -10,7 +10,7 @@
                    ref="account.view_account_invoice_report_search"/>
             <field name="arch" type="xml">
                 <!--  <filter name="thisyear" position="after"> -->
-                <xpath expr="//search/field[@name='date']" position="after">
+                <xpath expr="//search/field[@name='invoice_date']" position="after">
                     <filter string="This F.Year" name="thisyear"
                             domain="['|', ('date', '=', False), '&amp;',('date','&lt;=', time.strftime('%Y-12-31')),('date','&gt;=',time.strftime('%Y-01-01'))]"
                             help="Journal Entries with period in current year"/>

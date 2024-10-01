@@ -34,7 +34,7 @@ class AccountCheckActionWizard(models.TransientModel):
             self.debit_account_id = self.journal_id.default_debit_account_id
             self.credit_account_id = self.journal_id.default_credit_account_id
 
-    @api.multi
+    
     def action_confirm(self):
         self.ensure_one()
         if self.action_type not in [

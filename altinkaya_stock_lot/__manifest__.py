@@ -4,7 +4,7 @@
 {
     "name": "Altinkaya Stock Lot Extensions",
     "summary": "Adds custom fields to stock.production.lot",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "category": "stock",
     "website": "https://github.com/yibudak",
     "author": "Yiğit Budak",

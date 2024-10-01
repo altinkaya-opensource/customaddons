@@ -22,10 +22,10 @@
 from odoo import models, fields, api
 
 
-class AccountInvoice(models.Model):
-    _inherit = 'account.invoice'
+class AccountMove(models.Model):
+    _inherit = 'account.move'
 
-    @api.one
+    
     @api.depends('amount_total', 'currency_id')
     def _compute_invoice_amount_in_words(self):
         lang = self.env.context.get('lang', self.sudo().company_id.partner_id.lang)
@@ -39,7 +39,7 @@ class AccountInvoice(models.Model):
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    @api.one
+    
     @api.depends('amount_total', 'currency_id')
     def _compute_sale_order_amount_in_words(self):
         lang = self.env.context.get('lang') or self.partner_id.lang or self.sudo().company_id.partner_id.lang
@@ -53,7 +53,7 @@ class SaleOrder(models.Model):
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
-    @api.one
+    
     @api.depends('amount_total', 'currency_id')
     def _compute_purchase_order_amount_in_words(self):
         lang = self.env.context.get('lang', self.sudo().company_id.partner_id.lang)
@@ -67,7 +67,7 @@ class PurchaseOrder(models.Model):
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
 
-    @api.one
+    
     @api.depends('amount', 'currency_id')
     def _compute_account_payment_amount_in_words(self):
         lang = self.env.context.get('lang', self.sudo().company_id.partner_id.lang)

@@ -4,22 +4,22 @@
 from odoo import fields,models,api
 
 
-class ReportAccountInvoice(models.TransientModel):
-    _name = 'report.account.invoice'
-    _description = 'Wizard for report.account.invoice'
+class ReportAccountMove(models.TransientModel):
+    _name = 'report.account.move'
+    _description = 'Wizard for report.account.move'
     _inherit = 'xlsx.report'
 
-    # Report Result, account.invoice
+    # Report Result, account.move
     results = fields.Many2many(
-        comodel_name='account.invoice',
+        comodel_name='account.move',
         string='Invoices',
         compute='_get_invoices',
         help='Use compute fields, so there is nothing stored in database',
     )
 
-    @api.multi
+    
     def _get_invoices(self):
         selected_ids = self.env.context.get('active_ids', [])
-        ids = self.env['account.invoice'].browse(selected_ids)
+        ids = self.env['account.move'].browse(selected_ids)
         for rec in self:
             rec.results = ids

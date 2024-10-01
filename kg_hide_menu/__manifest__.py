@@ -12,12 +12,12 @@
         Restrict Menu Items from Specific Users""",
     'description': """
         Restrict Menu Items from Specific Users""",
-    'author':'Klystron Global',
+    'author': 'Klystron Global',
     'maintainer':'Kiran K',
     'website': "https://www.klystronglobal.com/",
     'images': ["static/description/banner.png"],
     'category': 'Extra Rights',
-    'version': "12.0.1.0.0",
+    'version': "13.0.1.0.0",
     'license': 'AGPL-3',
     'depends': [
         'base'

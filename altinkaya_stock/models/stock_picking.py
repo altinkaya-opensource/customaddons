@@ -24,7 +24,7 @@ from odoo import models, api, fields
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.multi
+    
     def open_sales_order(self):
         self.ensure_one()
         action = self.env.ref('sale.action_orders').read()[0]
@@ -108,7 +108,7 @@ class StockPicking(models.Model):
             else:
                 pick.trimmed_sale_note = pick.sale_id.note
 
-    @api.multi
+    
     def open_record(self):
         form_id = self.env.ref('stock.view_picking_form')
         return {

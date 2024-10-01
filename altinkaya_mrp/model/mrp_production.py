@@ -50,7 +50,7 @@ class MrpProduction(models.Model):
     # product_pickings = fields.Many2many(compute="_get_product_pickings",string="Product Pickings", relation='stock.picking',
     #          readonly=True)
 
-    @api.multi
+    
     def _generate_moves(self):
         if self.env.context.get("context", {}).get("migration", False):
             return True
@@ -164,18 +164,18 @@ class MrpProduction(models.Model):
     #         self.env['stock.move'].browse([move_id]).priority = production.priority
     #         return move_id
 
-    #     @api.multi
+    #     
     #     def action_confirm(self):
     #         res = super(MrpProduction, self).action_confirm()
     #         self.env.cr.commit()
     #         res2 = self.action_assign()
     #         return res
 
-    @api.multi
+    
     def button_print_prod_order(self):
         return self.env.ref("mrp.action_report_production_order").report_action(self)
 
-    @api.multi
+    
     def action_print_product_label(self):
         self.ensure_one()
         aw_obj = self.env["ir.actions.act_window"].with_context(
@@ -194,20 +194,20 @@ class MrpProduction(models.Model):
         )
         return action
 
-    @api.multi
+    
     def action_create_procurement(self):
         return {}
 
-    @api.multi
+    
     def action_make_mts(self):
         return {}
 
-    @api.multi
+    
     def action_set_production_started(self):
         for production in self:
             production.write({"state": "planned", "date_start2": fields.Datetime.now()})
 
-    @api.multi
+    
     def _update_raw_move(self, bom_line, line_data):
         """Inherited to work with split procurements.
         If we found multiple moves that combined MTM and MTS,
@@ -272,7 +272,7 @@ class MrpProduction(models.Model):
         else:
             return super(MrpProduction, self)._update_raw_move(bom_line, line_data)
 
-    @api.multi
+    
     def _rearrange_procurement_priorities(self):
         """
         Rearrange the priorities of the productions which are created from procurement

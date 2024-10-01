@@ -9,7 +9,3 @@
 .o_group_pager .o_pager_reload:hover {
     background-color: #e2e2e0;
 }
-
-.o_form_sheet .o_pager_reload{
-	display: none;
-}

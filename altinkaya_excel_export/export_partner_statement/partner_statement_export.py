@@ -23,7 +23,7 @@ class ReportPartnerStatement(models.TransientModel):
         return self.env['res.partner'].browse(selected_ids)[0]
 
     def _default_comp_curr(self):
-        return self.env.user.company_id.currency_id.id
+        return self.env.company.currency_id.id
 
     date_start = fields.Date('Start Date', required=1, default=_default_date_start, store=True)
     date_end = fields.Date('End Date', required=1, default=_default_date_end, store=True)
@@ -37,13 +37,13 @@ class ReportPartnerStatement(models.TransientModel):
         help='Use compute fields, so there is nothing stored in database',
     )
 
-    @api.multi
+    
     def _get_lines(self):
         for rec in self:
             rec.results = self._get_statement_data()
 
 
-    @api.multi
+    
     def _get_statement_data(self):
         statement_data = []
         balance, seq = 0.0, 0

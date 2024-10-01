@@ -12,18 +12,15 @@
                 </xpath>
 
                 <xpath expr="//button[@name='button_unreserve']" position="after">
-                    <button name="action_set_production_started" string="Start Production"
-                            attrs="{'invisible':[('state', 'not in', ['confirmed'])]}"
-                            type="object"/>
+                    <button name="action_set_production_started" string="Start Production" attrs="{'invisible':[('state', 'not in', ['confirmed'])]}" type="object"/>
                 </xpath>
 
                 <xpath expr="//div[@name='button_box']" position="inside">
-                    <button class="oe_inline oe_stat_button" name="action_print_product_label" type="object"
-                            icon="fa-barcode" string="Print Barcode"/>
+                    <button class="oe_inline oe_stat_button" name="action_print_product_label" type="object" icon="fa-barcode" string="Print Barcode"/>
                 </xpath>
                 <xpath expr="//field[@name='user_id']" position="replace"/>
-                <xpath expr="//field[@name='location_src_id']" position='replace'/>
-                <xpath expr="//field[@name='location_dest_id']" position='replace'/>
+                <!-- <xpath expr="//field[@name='location_src_id']" position='replace'/> -->
+                <!-- <xpath expr="//field[@name='location_dest_id']" position='replace'/> -->
                 <xpath expr="//form//field[@name='product_id']" position='attributes'>
                     <attribute name="domain">[('has_production_bom','=',True)]</attribute>
                     <attribute name="class"></attribute>
@@ -34,15 +31,13 @@
                     <field name="date_start2"/>
                     <field name="date_finished2" invisible="1"/>
                 </xpath>
-                <xpath expr="//field[@name='availability']" position="after">
-                    <field name="location_src_id"/>
-                    <field name="location_dest_id"/>
-                </xpath>
                 <xpath expr="//field[@name='origin']" position="after">
                     <field name="sale_id" readonly="1"/>
                     <field name="procurement_group_id"/>
                     <field name="x_makine"/>
                     <field name="x_operator"/>
+                    <field name="location_src_id"/>
+                    <field name="location_dest_id"/>
                 </xpath>
                 <xpath expr="//field[@name='routing_id']" position="attributes">
                     <attribute name="attrs">{'invisible': 1}</attribute>
@@ -52,13 +47,11 @@
                     <field name="x_note"/>
                     <field name="sale_note"/>
                 </xpath>
-                <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_id']"
-                       position="after">
-                    <button name="action_create_procurement" type="object" string="Tedarik"
-                            attrs="{'invisible':[('state','in',['waiting','done'])]}"/>
-                    <button name="action_make_mts" type="object" string="Stoktan Al"
-                            attrs="{'invisible':[('state', 'not in', ['waiting','cancel'])]}"/>
-                </xpath>
+                <!-- TODO: Migration -->
+                <!-- <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_id']" position="after">
+                    <button name="action_create_procurement" type="object" string="Tedarik" attrs="{'invisible':[('state','in',['waiting','done'])]}"/>
+                    <button name="action_make_mts" type="object" string="Stoktan Al" attrs="{'invisible':[('state', 'not in', ['waiting','cancel'])]}"/>
+                </xpath> -->
             </field>
         </record>
 
@@ -66,7 +59,7 @@
             <field name="name">Manufacturing Orders</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mrp.production</field>
-            <field name="view_type">form</field>
+
             <field name="view_mode">tree,graph,pivot,form</field>
         </record>
 
@@ -76,13 +69,7 @@
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='action_view_mos']" position="replace">
-                    <button class="oe_stat_button"
-                            name="action_view_mos"
-                            type="object"
-                            attrs="{'invisible': [('type', 'not in', ['product', 'consu'])]}"
-                            icon="fa-list-alt"
-                            help="Manufactured in the last 365 days"
-                            options="{}">
+                    <button class="oe_stat_button" name="action_view_mos" type="object" attrs="{'invisible': [('type', 'not in', ['product', 'consu'])]}" icon="fa-list-alt" help="Manufactured in the last 365 days" options="{}">
                         <div class="o_field_widget o_stat_info">
                             <span class="o_stat_text">
                                 Üretim
@@ -94,72 +81,54 @@
         </record>
 
         <record id="mrp_production_tree_view_priority" model="ir.ui.view">
-        <field name="name">MRP Production Tree View Priorityr</field>
-        <field name="model">mrp.production</field>
-        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
-        <field name="arch" type="xml">
-            <field name="date_planned_start" position="after">
-                <field name="priority"/>
+            <field name="name">MRP Production Tree View Priorityr</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="date_planned_start" position="after">
+                    <field name="priority"/>
+                </field>
             </field>
-        </field>
         </record>
 
         <record id="mrp_enjek_menu" model="ir.actions.act_window">
             <field name="name">Enjeksiyon İşleri</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mrp.production</field>
-            <field name="view_type">form</field>
+
             <field name="view_mode">tree,form</field>
-            <field name="priority">1</field>
             <field name="domain">[["process_id","ilike","enjeksiyon"]]</field>
             <field name="context">{'search_default_todo':1}</field>
         </record>
 
-        <menuitem id="menu_mrp_enjeksiyon_production"
-                  name="Enjeksiyon İşleri"
-                  action="mrp_enjek_menu"
-                  parent="mrp.menu_mrp_manufacturing"
-                  groups="mrp.group_mrp_routings"
-                  sequence="0"/>
+        <menuitem id="menu_mrp_enjeksiyon_production" name="Enjeksiyon İşleri" action="mrp_enjek_menu" parent="mrp.menu_mrp_manufacturing" groups="mrp.group_mrp_routings" sequence="0"/>
 
 
         <record id="mrp_cnc_menu" model="ir.actions.act_window">
             <field name="name">CNC Kesim İşleri</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mrp.production</field>
-            <field name="view_type">form</field>
+
             <field name="view_mode">tree,form</field>
-            <field name="priority">1</field>
             <field name="domain">[["process_id","=",2]]</field>
             <field name="context">{'search_default_todo':1}</field>
 
         </record>
-        <menuitem id="menu_mrp_cnc_production"
-                  name="CNC Kesim İşleri"
-                  action="mrp_cnc_menu"
-                  parent="mrp.menu_mrp_manufacturing"
-                  groups="mrp.group_mrp_routings"
-                  sequence="0"/>
+        <menuitem id="menu_mrp_cnc_production" name="CNC Kesim İşleri" action="mrp_cnc_menu" parent="mrp.menu_mrp_manufacturing" groups="mrp.group_mrp_routings" sequence="0"/>
 
 
         <record id="mrp_profil_menu" model="ir.actions.act_window">
             <field name="name">Profil Kesim İşleri</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mrp.production</field>
-            <field name="view_type">form</field>
-            <field name="view_m ode">tree,form</field>
-            <field name="priority">1</field>
+
+            <field name="view_mode">tree,form</field>
             <field name="domain">[["process_id","=",8]]</field>
             <field name="context">{'search_default_todo':1}</field>
 
         </record>
-        
-        <menuitem id="menu_mrp_profil_production"
-                  name="Profil Kesim İşleri"
-                  action="mrp_profil_menu"
-                  parent="mrp.menu_mrp_manufacturing"
-                  groups="mrp.group_mrp_routings"
-                  sequence="0"/>
+
+        <menuitem id="menu_mrp_profil_production" name="Profil Kesim İşleri" action="mrp_profil_menu" parent="mrp.menu_mrp_manufacturing" groups="mrp.group_mrp_routings" sequence="0"/>
 
 
 
@@ -169,19 +138,13 @@
             <field name="name">Sac Atölyesi İşleri</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mrp.production</field>
-            <field name="view_type">form</field>
+
             <field name="view_mode">tree,form</field>
-            <field name="priority">1</field>
             <field name="domain">[["process_id","=",10]]</field>
             <field name="context">{'search_default_todo':1}</field>
 
         </record>
-        <menuitem id="menu_mrp_sac_production"
-                  name="Sac Atölyesi İşleri"
-                  action="mrp_sac_menu"
-                  parent="mrp.menu_mrp_manufacturing"
-                  groups="mrp.group_mrp_routings"
-                  sequence="0"/>
+        <menuitem id="menu_mrp_sac_production" name="Sac Atölyesi İşleri" action="mrp_sac_menu" parent="mrp.menu_mrp_manufacturing" groups="mrp.group_mrp_routings" sequence="0"/>
 
 
 
@@ -189,38 +152,26 @@
             <field name="name">Montaj İşleri</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mrp.production</field>
-            <field name="view_type">form</field>
+
             <field name="view_mode">tree,form</field>
-            <field name="priority">1</field>
             <field name="domain">["|",["process_id","ilike","basit montaj"],["process_id","ilike","ayrıntılı montaj"]]</field>
             <field name="context">{'search_default_todo':1}</field>
 
         </record>
-        <menuitem id="menu_mrp_ayrintili_production"
-                  name="Montaj İşleri"
-                  action="mrp_ayrintili_menu"
-                  parent="mrp.menu_mrp_manufacturing"
-                  groups="mrp.group_mrp_routings"
-                  sequence="0"/>
+        <menuitem id="menu_mrp_ayrintili_production" name="Montaj İşleri" action="mrp_ayrintili_menu" parent="mrp.menu_mrp_manufacturing" groups="mrp.group_mrp_routings" sequence="0"/>
 
 
         <record id="mrp_cnctorna_menu" model="ir.actions.act_window">
             <field name="name">CNC Torna İşleri</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mrp.production</field>
-            <field name="view_type">form</field>
+
             <field name="view_mode">tree,form</field>
-            <field name="priority">1</field>
             <field name="domain">[["process_id","=",5]]</field>
             <field name="context">{'search_default_todo':1}</field>
 
         </record>
-        <menuitem id="menu_mrp_cnctorna_production"
-                  name="CNC Torna İşleri"
-                  action="mrp_cnctorna_menu"
-                  parent="mrp.menu_mrp_manufacturing"
-                  groups="mrp.group_mrp_routings"
-                  sequence="0"/>
+        <menuitem id="menu_mrp_cnctorna_production" name="CNC Torna İşleri" action="mrp_cnctorna_menu" parent="mrp.menu_mrp_manufacturing" groups="mrp.group_mrp_routings" sequence="0"/>
 
 
 
@@ -230,19 +181,13 @@
             <field name="name">Görsel Baskı İşleri</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mrp.production</field>
-            <field name="view_type">form</field>
+
             <field name="view_mode">tree,form</field>
-            <field name="priority">1</field>
             <field name="domain">[["process_id","=",16]]</field>
             <field name="context">{'search_default_todo':1}</field>
 
         </record>
-        <menuitem id="menu_mrp_gorsel_production"
-                  name="Görsel Baskı İşleri"
-                  action="mrp_gorsel_menu"
-                  parent="mrp.menu_mrp_manufacturing"
-                  groups="mrp.group_mrp_routings"
-                  sequence="0"/>
+        <menuitem id="menu_mrp_gorsel_production" name="Görsel Baskı İşleri" action="mrp_gorsel_menu" parent="mrp.menu_mrp_manufacturing" groups="mrp.group_mrp_routings" sequence="0"/>
 
 
     </data>

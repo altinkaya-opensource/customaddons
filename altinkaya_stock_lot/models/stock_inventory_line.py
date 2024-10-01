@@ -4,7 +4,7 @@ from odoo import api, models
 class InventoryLine(models.Model):
     _inherit = "stock.inventory.line"
 
-    @api.multi
+    
     def _create_missing_lot(self):
         """EXPERIMENTAL: Create a lot for the move line if it is missing."""
         for rec in self:

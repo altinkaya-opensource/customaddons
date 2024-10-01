@@ -66,7 +66,7 @@ class PartnerReconcileClose(models.TransientModel):
 
         return {"domain": {"partner_id": domain}}
 
-    @api.multi
+    
     def action_done(self):
 
         self.ensure_one()

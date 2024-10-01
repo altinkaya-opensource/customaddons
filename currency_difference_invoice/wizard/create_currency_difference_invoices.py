@@ -10,7 +10,7 @@ class CreateCurrencyDifferenceInvoices(models.TransientModel):
     payment_term_id = fields.Many2one('account.payment.term', string='Payment Term', required=True)
     billing_point_id = fields.Many2one('account.billing.point', string='Billing Point', required=True)
 
-    @api.multi
+    
     def create_invoices(self):
         context = dict(self._context or {})
         active_ids = context.get('active_ids', []) or []

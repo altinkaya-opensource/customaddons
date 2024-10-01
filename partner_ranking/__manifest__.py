@@ -1,7 +1,7 @@
 
 {
     'name': 'Partner Ranking with Sale',
-    'version': '12.0.1',
+    'version': '13.0.0.1.0',
     'website': 'https://www.codequarters.com',
     'category': 'Sales',
     'summary': 'Altinkaya Partner Ranking',

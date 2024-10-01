@@ -38,7 +38,7 @@
             <field name="model">stock.move</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='active_move_line_ids']/tree" position="inside">
+                <xpath expr="//field[@name='move_line_ids']/tree" position="inside">
                     <field name="state" invisible="1" />
                     <field name="product_type_related" invisible="1" />
                     <button name="action_scrap_button"

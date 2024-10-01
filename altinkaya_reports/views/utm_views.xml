@@ -4,7 +4,7 @@
 		<record model="ir.ui.view" id="view_utm_campaign_form_inherit_altinkaya">
         <field name="name">utm.campaign.form.inherit.altinkaya</field>
         <field name="model">utm.campaign</field>
-        <field name="inherit_id" ref="utm.utm_campaign_form"/>
+        <field name="inherit_id" ref="utm.utm_campaign_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//form" position="inside">
                 <notebook>

@@ -2,20 +2,21 @@
 <openerp>
   <data>
 
-    <record model="ir.ui.view" id="account_invoice_total_balance">
-          <field name="name">account.invoice.total.balance</field>
-          <field name="model">account.invoice</field>
-          <field name="inherit_id" ref="account.invoice_form"/>
+    <record model="ir.ui.view" id="account_move_total_balance">
+          <field name="name">account.move.total.balance</field>
+          <field name="model">account.move</field>
+          <field name="inherit_id" ref="account.view_move_form"/>
           <field name="type">form</field>
           <field name="arch" type="xml">
-          <field name="fiscal_position_id" position="after">
+          <field name="ref" position="after">
                <field name="total_balance" string="Total Balance"/>
           </field>
           </field>
     </record>
-    <menuitem id="menu_payment_detail" name="Partner Payment detail"
+    <!-- TODO: migration -->
+    <!-- <menuitem id="menu_payment_detail" name="Partner Payment detail"
               parent="account.menu_finance_receivables"
-              action="partner_payment_detail.action_wizard_partner_detail_form" sequence="101"/>
+              action="partner_payment_detail.action_wizard_partner_detail_form" sequence="101"/> -->
 
 </data>
 </openerp>

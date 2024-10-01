@@ -5,7 +5,8 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
         <field name="arch" type="xml">
-            <xpath expr="//filter[@name='activities_my']" position="after">
+            <xpath expr="//filter[@name='order_date']" position="after">
+                <separator/>
                 <filter string="My Team" name="my_team"
                         domain="[('my_team', '=', 'user_id.team_id')]"/>
             </xpath>

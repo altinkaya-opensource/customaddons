@@ -40,8 +40,8 @@
         </field>
     </record>
 
-
-    <act_window
+    <!-- TODO: migration -->
+    <!-- <act_window
     id="action_confirm_payment_sale"
     res_model="sale.confirm.payment"
     src_model="sale.order"
@@ -49,6 +49,6 @@
     target="new"
     name="Confirm Payment"
     view_id="view_sale_confirm_payment_form"
-/>
+/> -->
 
 </odoo>

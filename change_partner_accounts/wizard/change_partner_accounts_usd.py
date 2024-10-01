@@ -6,7 +6,7 @@ class ChangePartnerAccountsUSD(models.TransientModel):
     _name = 'change.partner.accounts.usd'
     _description = "Changing partner accounts to USD Wizard"
 
-    @api.multi
+    
     def change_partners_account_to_usd(self):
         context = dict(self._context or {})
         active_ids = context.get('active_ids', []) or []

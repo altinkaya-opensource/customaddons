@@ -25,7 +25,6 @@
 			<xpath expr="//button[@name='action_update_quantity_on_hand']" position="after">
 				<button name="compute_set_product_price" string="Compute Set Price" type="object"
 						group="__export__.res_groups_95_4c14ca81"
-						attrs="{'invisible': [('set_product', '!=', True)]}"
 						confirm="This method will recalculate the prices of all variants within the current product template. Do you want to continue?"/>
 			</xpath>
             </field>
@@ -97,14 +96,6 @@
 				</group>
 			</xpath>
 
-			<xpath expr="//group[@name='fields']" position="inside">
-    			<xpath expr="//group[2]/label[1]" position="move"/>
-				<xpath expr="//group[2]/div[1]" position="move"/>
-			</xpath>
-
-			<xpath expr="//group[@name='fields']" position="inside">
-				<xpath expr="//field[@name='hs_code_id']" position="move"/>
-			</xpath>
 
 
            <!-- <xpath expr="//field[@name='description']" position="after">
@@ -162,12 +153,12 @@
 				<xpath expr="//tree/field[@name='virtual_available']" position="attributes">
 					<attribute name="invisible">1</attribute>
 				</xpath>
-				<xpath expr="//tree/field[@name='incoming_qty']" position="attributes">
+				<!-- <xpath expr="//tree/field[@name='incoming_qty']" position="attributes">
 					<attribute name="invisible">1</attribute>
 				</xpath>
 				<xpath expr="//tree/field[@name='outgoing_qty']" position="attributes">
 					<attribute name="invisible">1</attribute>
-				</xpath>
+				</xpath> -->
 			</field>
 		</record>
 	</data>

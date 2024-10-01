@@ -21,7 +21,7 @@
 
 {
     'name': 'MRP - Dynamic Raw Materials Calculation',
-    'version': '1.0',
+    'version': '13.0.0.1.0',
     'category': 'MRP',
     'summary': 'Compute raw materials quantity based on the numeric value of a specific attribute of the product to be produced.',
     'description': """

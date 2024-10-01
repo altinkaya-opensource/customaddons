@@ -24,7 +24,7 @@ class SaleOrder(models.Model):
         store=False,
     )
 
-    @api.multi
+    
     def _compute_my_team(self):
         for rec in self:
             if self.env.user in rec.team_id.member_ids:

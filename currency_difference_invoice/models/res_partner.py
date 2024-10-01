@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    @api.one
+    
     def _compute_currency_difference_amls(self):
         difference_aml_domain = [
             ("partner_id", "=", self.id),
@@ -25,7 +25,7 @@ class ResPartner(models.Model):
         else:
             self.currency_difference_amls = False
 
-    @api.multi
+    
     @api.depends("currency_difference_amls")
     def _compute_difference_to_invoice(self):
         for partner in self:
@@ -34,7 +34,7 @@ class ResPartner(models.Model):
             else:
                 partner.difference_to_invoice = False
 
-    @api.multi
+    
     def _value_search_diff_check(self, operator, value):
         AccountMoveLine = self.env["account.move.line"]
         domain = [
@@ -42,7 +42,7 @@ class ResPartner(models.Model):
             (
                 "journal_id",
                 "=",
-                self.env.user.company_id.currency_exchange_journal_id.id,
+                self.env.company.currency_exchange_journal_id.id,
             ),
         ]
 
@@ -99,7 +99,7 @@ class ResPartner(models.Model):
                     ("state", "=", "draft"),
                     ("journal_id", "=", diff_inv_journal.id),
                     ("partner_id", "=", self.id),
-                    ("currency_id", "=", self.env.user.company_id.currency_id.id),
+                    ("currency_id", "=", self.env.company.currency_id.id),
                 ]
             )
             if draft_dif_inv:
@@ -158,7 +158,7 @@ class ResPartner(models.Model):
                         "difference_base_aml_id": diff_aml.id,
                         "name": _("Currency Difference"),
                         "uom_id": 1,
-                        "account_id": self.env.user.company_id.currency_diff_inv_account_id.id,
+                        "account_id": self.env.company.currency_diff_inv_account_id.id,
                     }
                     amount_untaxed = diff_aml.debit or diff_aml.credit
                     inv_ids = diff_aml.full_reconcile_id.reconciled_line_ids.filtered(
@@ -253,7 +253,7 @@ class ResPartner(models.Model):
                         "partner_id": self.id,
                         "date_invoice": date,
                         "journal_id": diff_inv_journal.id,
-                        "currency_id": self.env.user.company_id.currency_id.id,
+                        "currency_id": self.env.company.currency_id.id,
                         "type": inv_type,
                         "billing_point_id": billing_point.id,
                         "payment_term_id": payment_term.id,
@@ -374,7 +374,7 @@ class ResPartner(models.Model):
             "journal_id": diff_journal.id,
             "date": move_date,
             "state": "draft",
-            "currency_id": self.env.user.company_id.currency_id.id,
+            "currency_id": self.env.company.currency_id.id,
         }
 
         difference_aml_list = []
@@ -415,7 +415,7 @@ class ResPartner(models.Model):
                 "account_id": 426,
                 "debit": 0,
                 "credit": total_debit,
-                "currency_id": self.env.user.company_id.currency_id.id,
+                "currency_id": self.env.company.currency_id.id,
             }
             difference_aml_list.append(debit_counterpart_aml)
 
@@ -425,7 +425,7 @@ class ResPartner(models.Model):
                 "account_id": 429,
                 "debit": total_credit,
                 "credit": 0,
-                "currency_id": self.env.user.company_id.currency_id.id,
+                "currency_id": self.env.company.currency_id.id,
             }
             difference_aml_list.append(credit_counterpart_aml)
 

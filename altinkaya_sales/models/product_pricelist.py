@@ -57,7 +57,7 @@ class ProductPricelist(models.Model):
         help="If set, this pricelist will be showed on the portal account settings",
     )
 
-    @api.multi
+    
     def _compute_price_rule(self, products_qty_partner, date=False, uom_id=False):
         """Low-level method - Mono pricelist, multi products
         Returns: dict{product_id: (price, suitable_rule) for the given pricelist}
@@ -204,7 +204,7 @@ class ProductPricelist(models.Model):
                     price = rule.base_pricelist_id.currency_id._convert(
                         price_tmp,
                         self.currency_id,
-                        self.env.user.company_id,
+                        self.env.company,
                         date,
                         round=False,
                     )
@@ -299,7 +299,7 @@ class ProductPricelist(models.Model):
                 price = base_currency._convert(
                     price,
                     suitable_rule.currency_id,
-                    self.env.user.company_id,
+                    self.env.company,
                     date,
                     round=False,
                 )

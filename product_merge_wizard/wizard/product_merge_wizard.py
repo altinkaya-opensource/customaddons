@@ -10,7 +10,7 @@ from odoo.tools.translate import _
 from odoo import exceptions
 from odoo.tools.misc import mute_logger
 
-from odoo.osv.orm import browse_record
+from odoo.models import BaseModel
 
 import psycopg2
 
@@ -33,12 +33,12 @@ class ProductMergeWizard(models.TransientModel):
                                                    'value_ids': [(6, False, al.value_ids.ids)]})
                                        for al in self.product_tmpl_id.attribute_line_ids]
 
-    @api.one
+    
     @api.depends('attribute_line_ids.value_ids')
     def _compute_attribute_ids(self):
         self.attribute_value_ids = self.attribute_line_ids.mapped('value_ids')
 
-    @api.multi
+    
     def action_merge(self):
         self.ensure_one()
 
@@ -82,7 +82,7 @@ class ProductMergeWizard(models.TransientModel):
             'context': self.env.context,
         }
 
-    @api.multi
+    
     def _update_refs(self, product_tmpl_id, new_product_tmpl_id):
         """
         Update all references of moved product template to newly created one
@@ -92,7 +92,7 @@ class ProductMergeWizard(models.TransientModel):
         self._update_values(product_tmpl_id, new_product_tmpl_id)
         return
 
-    @api.multi
+    
     def get_fk_on(self, table):
         q = """  SELECT cl1.relname as table,
                         att1.attname as column
@@ -113,7 +113,7 @@ class ProductMergeWizard(models.TransientModel):
         self.env.cr.execute(q, (table,))
         return self.env.cr.fetchall()
 
-    @api.multi
+    
     def _update_foreign_keys(self, product_tmpl_id, new_product_tmpl_id):
 
         for table, column in self.get_fk_on('product_template'):
@@ -152,7 +152,7 @@ class ProductMergeWizard(models.TransientModel):
                     query = 'UPDATE "%(table)s" SET %(column)s = %%s WHERE %(column)s = %%s' % query_dic
                     self.env.cr.execute(query, (new_product_tmpl_id.id, product_tmpl_id.id,))
 
-    @api.multi
+    
     def _update_reference_fields(self, product_tmpl_id, new_product_tmpl_id):
 
         def update_records(model, src, field_model='model', field_id='res_id'):
@@ -201,12 +201,12 @@ class ProductMergeWizard(models.TransientModel):
             }
             model_ids.write(values)
 
-    @api.multi
+    
     def _update_values(self, product_tmpl_id, new_product_tmpl_id):
         columns = new_product_tmpl_id._fields
 
         def write_serializer(item):
-            if isinstance(item, browse_record):
+            if isinstance(item, BaseModel):
                 return item.id
             else:
                 return item

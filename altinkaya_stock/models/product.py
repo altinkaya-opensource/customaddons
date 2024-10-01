@@ -28,7 +28,7 @@ class ProductTemplate(models.Model):
                 if self.search_count([("default_code", "=", template.default_code)]) > 1:
                     raise UserError(_("The default code must be unique."))
 
-    @api.multi
+    
     def _compute_currency_id(self):
         main_company = self.env['res.company']._get_main_company()
         for template in self:
@@ -37,7 +37,7 @@ class ProductTemplate(models.Model):
             else:
                 template.currency_id = template.company_id.sudo().currency_id.id or main_company.currency_id.id
 
-    @api.multi
+    
     def _compute_cost_currency_id(self):
         main_company = self.env['res.company']._get_main_company()
         for template in self:
@@ -46,7 +46,7 @@ class ProductTemplate(models.Model):
             else:
                 template.cost_currency_id = template.company_id.sudo().currency_id.id or main_company.currency_id.id
 
-    @api.multi
+    
     def _guess_main_lang(self):
         super(ProductTemplate, self)._guess_main_lang()
         turkish = self.env.ref('base.lang_tr')
@@ -66,16 +66,16 @@ class Product(models.Model):
         string="Responsible Employee"
     )
 
-    domain_attribute_value_ids = fields.Many2many('product.attribute.value',
-                                                  compute='_compute_domain_attribute_value_ids')
+    # domain_attribute_value_ids = fields.Many2many('product.attribute.value',
+    #                                               compute='_compute_domain_attribute_value_ids')
 
     move_count = fields.Float('Move Count', default=0.0)
 
-    @api.multi
-    @api.depends('product_tmpl_id', 'product_tmpl_id.valid_product_attribute_value_ids')
-    def _compute_domain_attribute_value_ids(self):
-        for product in self:
-            product.domain_attribute_value_ids = product.product_tmpl_id.attribute_line_ids.mapped('value_ids')
+    # @api.multi
+    # @api.depends('product_tmpl_id', 'product_tmpl_id.valid_product_attribute_value_ids')
+    # def _compute_domain_attribute_value_ids(self):
+    #     for product in self:
+    #         product.domain_attribute_value_ids = product.product_tmpl_id.attribute_line_ids.mapped('value_ids')
 
     qty_available_sincan = fields.Float('Sincan Depo Mevcut', compute='_compute_custom_available',
                                         search='_search_qty_sincan')
@@ -163,7 +163,7 @@ class Product(models.Model):
     def _search_qty_kaplama(self, operator, value):
         return [('id', 'in', self.with_context({'location': 6362})._search_qty_available(operator, value))]
 
-    @api.multi
+    
     def _compute_custom_available(self):
         for product in self:
             product.qty_available_sincan = product.with_context({'location': 21}).qty_available
@@ -177,7 +177,7 @@ class Product(models.Model):
             product.qty_unreserved_sincan = product.with_context({'location': 21}).qty_available_not_res
             product.qty_unreserved_merkez = product.with_context({'location': 12}).qty_available_not_res
 
-    @api.multi
+    
     def _compute_custom2_available(self):
         for product in self:
             product.qty_available_montaj = product.with_context({'location': 53}).qty_available
@@ -190,7 +190,7 @@ class Product(models.Model):
             product.qty_available_torna = product.with_context({'location': 5895}).qty_available
             product.qty_available_kaplama = product.with_context({'location': 6362}).qty_available
 
-    @api.multi
+    
     def single_product_update_quant_reservation(self):
         StockQuant = self.env['stock.quant']
         StockMoveLine = self.env['stock.move.line']
@@ -220,7 +220,7 @@ class Product(models.Model):
                             'reserved_quantity': raw_reserved_qty
                         })
 
-    @api.multi
+    
     def _compute_set_quantities(self):
         # Explode set content and find unreserved quantity
         for product in self:
@@ -242,7 +242,7 @@ class Product(models.Model):
             else:
                 return product.qty_available_not_res
 
-    @api.one
+    
     def get_quantity_website(self):
         self.ensure_one()
         data = {}

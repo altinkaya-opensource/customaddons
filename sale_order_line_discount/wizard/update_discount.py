@@ -22,7 +22,7 @@ class update_discount(models.TransientModel):
     price_unit = fields.Float('Unit Price',
                                   digits=dp.get_precision('Product Price'))
 
-    @api.multi
+    
     def update_discount_price(self):
         context = dict(self._context)
         active_id = context.get('active_id')
