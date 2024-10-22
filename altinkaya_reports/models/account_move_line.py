@@ -25,26 +25,28 @@ class AccountMoveLine(models.Model):
         "price_subtotal",
     )
     def _compute_kdv_amount(self):
-        for ail in self:
-            currency_rate = ail.move_id.custom_rate
-            kdv_amount = 0.0
-            for tax in ail.tax_ids:
-                # We need to select tax_code based on invoice type
-                if ail.move_id.type in ["out_refund", "in_refund"]:
-                    tax_code = tax.refund_account_id.code
-                else:
-                    tax_code = tax.account_id.code
+      for ail in self:
+        ail.kdv_amount = 0.0
+        # for ail in self:
+        #     currency_rate = ail.move_id.custom_rate
+        #     kdv_amount = 0.0
+        #     for tax in ail.tax_ids:
+        #         # We need to select tax_code based on invoice type
+        #         if ail.move_id.type in ["out_refund", "in_refund"]:
+        #             tax_code = tax.refund_account_id.code
+        #         else:
+        #             tax_code = tax.account_id.code
 
-                if tax_code and tax_code.startswith("191.0"):
-                    kdv_amount -= ail.price_subtotal * tax.amount / 100
-                elif tax_code and tax_code.startswith("391.0"):
-                    kdv_amount += ail.price_subtotal * tax.amount / 100
+        #         if tax_code and tax_code.startswith("191.0"):
+        #             kdv_amount -= ail.price_subtotal * tax.amount / 100
+        #         elif tax_code and tax_code.startswith("391.0"):
+        #             kdv_amount += ail.price_subtotal * tax.amount / 100
 
-            # Convert to company currency
-            if ail.currency_id != ail.company_currency_id and currency_rate > 0.00001:
-                kdv_amount = kdv_amount / currency_rate
+        #     # Convert to company currency
+        #     if ail.currency_id != ail.company_currency_id and currency_rate > 0.00001:
+        #         kdv_amount = kdv_amount / currency_rate
 
-            ail.kdv_amount = kdv_amount
+        #     ail.kdv_amount = kdv_amount
 
 
 """

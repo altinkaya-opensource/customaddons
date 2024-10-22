@@ -53,8 +53,8 @@
         "views/res_partner.xml",
         "data/mail_data.xml",
         # "views/portal_templates.xml", # TODO: migration needed
-        "data/sale_portal_data.xml",
-        "views/sale_portal_templates.xml",
+        # "data/sale_portal_data.xml",
+        # "views/sale_portal_templates.xml",
         "views/res_partner_segment_view.xml",
         "views/res_country_view.xml",
         "views/res_bank_view.xml",

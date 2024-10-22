@@ -11,10 +11,10 @@ class AccountInvoice(models.Model):
     def _compute_usd_rate(self):
         currency_usd = self.env['res.currency'].search([('name', '=', 'USD')], limit=1)
         for ai in self:
-            date_invoice = ai.date_invoice
+            invoice_date = ai.invoice_date
             try:
-                ai.currency_rate = ai.currency_id.with_context(date=date_invoice).rate or 1.0
-                ai.usd_rate = currency_usd.with_context(date=date_invoice).rate or 1.0
+                ai.currency_rate = ai.currency_id.with_context(date=invoice_date).rate or 1.0
+                ai.usd_rate = currency_usd.with_context(date=invoice_date).rate or 1.0
             except Exception:
                 pass
 
@@ -52,7 +52,7 @@ class AccountInvoiceReport(models.Model):
     #            partner_campaign_rel.utm_campaign_id as mass_campaign_id,
     #            pt.id as product_tmpl_id,
     #             so.source_id as sale_source_id,so.campaign_id as sale_campaign_id, so.medium_id as sale_medium_id,
-    #            to_char(ai.date_invoice, 'MM') AS month_nr,
+    #            to_char(ai.invoice_date, 'MM') AS month_nr,
     #            SUM(ail.price_subtotal_signed * invoice_type.sign * ai.usd_rate) AS price_total_usd,
     #            ail.kdv_amount as total_tax,
     #            sum(abs(ail.price_subtotal_signed) * ai.usd_rate) /
